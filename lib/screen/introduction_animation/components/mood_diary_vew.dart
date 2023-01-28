@@ -12,7 +12,7 @@ class MoodDiaryVew extends StatelessWidget {
         Tween<Offset>(begin: Offset(1, 0), end: Offset(0, 0))
             .animate(CurvedAnimation(
       parent: animationController,
-      curve: Interval(
+      curve: const Interval(
         0.4,
         0.6,
         curve: Curves.fastOutSlowIn,
@@ -22,7 +22,7 @@ class MoodDiaryVew extends StatelessWidget {
         Tween<Offset>(begin: Offset(0, 0), end: Offset(-1, 0))
             .animate(CurvedAnimation(
       parent: animationController,
-      curve: Interval(
+      curve: const Interval(
         0.6,
         0.8,
         curve: Curves.fastOutSlowIn,
@@ -33,7 +33,7 @@ class MoodDiaryVew extends StatelessWidget {
         Tween<Offset>(begin: Offset(2, 0), end: Offset(0, 0))
             .animate(CurvedAnimation(
       parent: animationController,
-      curve: Interval(
+      curve: const Interval(
         0.4,
         0.6,
         curve: Curves.fastOutSlowIn,
@@ -43,7 +43,7 @@ class MoodDiaryVew extends StatelessWidget {
         Tween<Offset>(begin: Offset(0, 0), end: Offset(-2, 0))
             .animate(CurvedAnimation(
       parent: animationController,
-      curve: Interval(
+      curve: const Interval(
         0.6,
         0.8,
         curve: Curves.fastOutSlowIn,
@@ -53,7 +53,7 @@ class MoodDiaryVew extends StatelessWidget {
         Tween<Offset>(begin: Offset(4, 0), end: Offset(0, 0))
             .animate(CurvedAnimation(
       parent: animationController,
-      curve: Interval(
+      curve: const Interval(
         0.4,
         0.6,
         curve: Curves.fastOutSlowIn,
@@ -63,7 +63,7 @@ class MoodDiaryVew extends StatelessWidget {
         Tween<Offset>(begin: Offset(0, 0), end: Offset(-4, 0))
             .animate(CurvedAnimation(
       parent: animationController,
-      curve: Interval(
+      curve: const Interval(
         0.6,
         0.8,
         curve: Curves.fastOutSlowIn,
@@ -79,19 +79,19 @@ class MoodDiaryVew extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                "Mood Dairy",
+              const Text(
+                "Posts",
                 style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold),
               ),
               SlideTransition(
                 position: _moodFirstHalfAnimation,
                 child: SlideTransition(
                   position: _moodSecondHalfAnimation,
-                  child: Padding(
+                  child: const Padding(
                     padding: EdgeInsets.only(
                         left: 64, right: 64, top: 16, bottom: 16),
                     child: Text(
-                      "Lorem ipsum dolor sit amet,consectetur adipiscing elit,sed do eiusmod tempor incididunt ut labore",
+                      "The application provides a post writing service to share your experience with other people",
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -102,7 +102,7 @@ class MoodDiaryVew extends StatelessWidget {
                 child: SlideTransition(
                   position: _imageSecondHalfAnimation,
                   child: Container(
-                    constraints: BoxConstraints(maxWidth: 370, maxHeight: 400),
+                    constraints: const BoxConstraints(maxWidth: 370, maxHeight: 400),
                     child: Image.asset(
                       'asset/introduction_animation/relax_image.jpg',
                       fit: BoxFit.contain,

@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:nicu/apply.dart';
 import 'package:nicu/color.dart';
-import 'package:nicu/screen/chat/chat.dart';
+
+
 import 'package:nicu/screen/forget_password_screen/forget_password.dart';
+import 'package:nicu/screen/home_screen/create_post.dart';
+import 'package:nicu/screen/home_screen/home.dart';
+import 'package:nicu/screen/home_screen/taps/messages/chats_tap.dart';
+import 'package:nicu/screen/home_screen/taps/messages/message_screen.dart';
 import 'package:nicu/screen/sign_in/sign_in.dart';
 import 'package:nicu/screen/sign_up/sign_up.dart';
 import 'package:nicu/screen/splash_screen/splash.dart';
@@ -16,8 +22,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
-      // home: ForgetBassword(),
+      home:Chats(),
+
       routes: {
         "signIn": (context) => SignIn(),
         "signUp": (context) => SignUp(),
@@ -32,7 +38,7 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.white,
       ),
       darkTheme:
-          ThemeData(brightness: Brightness.dark, primaryColor: Colors.white),
+      ThemeData(brightness: Brightness.dark, primaryColor: Colors.white),
     );
   }
 }

@@ -39,10 +39,10 @@ class _applyState extends State<apply> {
       appBar: AppBar(
         backgroundColor: Color(0xffEAE3D1),
         elevation: 0,
-         title: Text('Back',style: TextStyle(color: Colors.blue[900] ,fontWeight: FontWeight.bold ,fontSize: 22.0 ),),
+         title: Text('Back',style: TextStyle(color:Theme.of(context).secondaryHeaderColor ,fontWeight: FontWeight.bold ,fontSize: 22.0 ),),
         leading: IconButton(
           onPressed: (){},
-          icon:Icon(Icons.arrow_back_ios_new ,color: Colors.blue[900],),
+          icon:Icon(Icons.arrow_back_ios_new ,color: Theme.of(context).secondaryHeaderColor),
         ),
 
       ),
@@ -84,7 +84,7 @@ class _applyState extends State<apply> {
                       child:   Text(
                         'NICU',
                         style: TextStyle(
-                          color: Colors.indigo[900],
+                          color: Theme.of(context).secondaryHeaderColor,
                           fontSize: 30,
                           fontWeight: FontWeight.w900
                         ),
@@ -94,7 +94,7 @@ class _applyState extends State<apply> {
                         style:  TextStyle(
                             fontSize: 25.0,
                             fontWeight: FontWeight.bold,
-                            color: Colors.indigo[900])),
+                            color: Theme.of(context).secondaryHeaderColor)),
                     const SizedBox(
                       height: 15.0,
                     ),
@@ -222,7 +222,7 @@ class _applyState extends State<apply> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Radio(
-                            activeColor:Colors.indigo[900],
+                            activeColor:Theme.of(context).secondaryHeaderColor,
                             value: 1,
                             groupValue: _value,
                             onChanged: (value) {
@@ -243,7 +243,7 @@ class _applyState extends State<apply> {
                         ),
                         Radio(
                             value: 2,
-                            activeColor: Colors.indigo[900],
+                            activeColor: Theme.of(context).secondaryHeaderColor,
                             groupValue: _value,
                             onChanged: (value) {
                               setState(() {
@@ -265,7 +265,7 @@ class _applyState extends State<apply> {
                     ),
                     MyButton(
                         title: 'Apply',
-                        color: Colors.indigo[900],
+                        color: Theme.of(context).secondaryHeaderColor,
                         onTap: () {
                           _submit();
                         },
