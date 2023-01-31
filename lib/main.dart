@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nicu/apply.dart';
-import 'package:nicu/color.dart';
-
-
+import 'package:nicu/component/colors.dart';
+import 'package:nicu/screen/doctor_screen/doctor_booking.dart';
+import 'package:nicu/screen/doctor_screen/doctors.dart';
 import 'package:nicu/screen/forget_password_screen/forget_password.dart';
 import 'package:nicu/screen/home_screen/create_post.dart';
+import 'package:nicu/screen/home_screen/first.dart';
 import 'package:nicu/screen/home_screen/home.dart';
 import 'package:nicu/screen/home_screen/taps/messages/chats_tap.dart';
 import 'package:nicu/screen/home_screen/taps/messages/message_screen.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:Chats(),
+      home:  const HomePage(),
 
       routes: {
         "signIn": (context) => SignIn(),

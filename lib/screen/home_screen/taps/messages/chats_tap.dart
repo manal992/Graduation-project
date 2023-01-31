@@ -1,10 +1,5 @@
-
 import 'package:flutter/material.dart';
-import 'package:nicu/app_theme.dart';
-
 import 'package:nicu/screen/home_screen/taps/messages/widgets/all_chat.dart';
-import 'package:nicu/screen/home_screen/taps/messages/widgets/my_tab_bar.dart';
-
 
 class Chats extends StatefulWidget {
   @override
@@ -47,26 +42,8 @@ class _ChatsState extends State<Chats> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).splashColor,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Theme.of(context).splashColor,
-        centerTitle: true,
-        leading: Icon(
-          Icons.menu,
-          size: 32,
-          color: Theme.of(context).secondaryHeaderColor,
-        ),
-        title: Text(
-          'Chats',
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 25,
-              color: Theme.of(context).secondaryHeaderColor),
-        ),
-      ),
       // backgroundColor: MyTheme.kPrimaryColor,
-      body:   AllChats(),
-
+      body: AllChats(),
     );
   }
 }

@@ -1,8 +1,6 @@
 import 'package:diamond_bottom_bar/diamond_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:nicu/color.dart';
-
 import 'package:nicu/screen/home_screen/taps/home_tap.dart';
 import 'package:nicu/screen/home_screen/taps/map_tap.dart';
 import 'package:nicu/screen/home_screen/taps/messages/chats_tap.dart';
@@ -25,6 +23,8 @@ List<Widget> page = [
   const Profile(),
 ];
 
+List<String>  title = ['NICU','Notification','','Chat','Profile',];
+
 int index = 0;
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -36,13 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         backgroundColor: Theme.of(context).splashColor,
         centerTitle: true,
-        leading: Icon(
-          Icons.menu,
-          size: 32,
-          color: Theme.of(context).secondaryHeaderColor,
-        ),
-        title: Text(
-          'NICU',
+        title: Text(title[index],
           style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 25,
@@ -82,8 +76,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     index = value;
                   });
                 },
-                selectedColor: Colors.grey,
-                unselectedColor: Colors.black,
+                selectedColor: Colors.grey.shade400,
+                unselectedColor: Colors.white,
                 selectedLightColor: Theme.of(context).splashColor,
               ),
             ),

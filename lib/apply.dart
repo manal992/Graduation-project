@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'button.dart';
-import 'color.dart';
+import 'const/color.dart';
 
 class apply extends StatefulWidget {
   apply({Key? key,  }) : super(key: key);
