@@ -13,13 +13,13 @@ class _ProfileState extends State<Profile> {
     return  Scaffold(
       backgroundColor: Theme.of(context).splashColor,
 
-      body: SingleChildScrollView(
-        child: Container(
-          decoration:   const BoxDecoration(
-            color:Colors.white,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
-          ),
+      body: Container(
+        decoration:   const BoxDecoration(
+          color:Colors.white,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
+        ),
+        child:  SingleChildScrollView(
           child: Column(
             children: [
               Padding(

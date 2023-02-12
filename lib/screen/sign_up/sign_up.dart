@@ -1,6 +1,9 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:nicu/screen/home_screen/home.dart';
 import '../../component/button.dart';
 
 class SignUp extends StatefulWidget {
@@ -11,6 +14,14 @@ class SignUp extends StatefulWidget {
 }
 
 class SignUpState extends State<SignUp> {
+  final GlobalKey<FormState> _formKey = GlobalKey();
+  late String _emailController;
+  late String _passwordController;
+  String? _phoneController;
+  String? _nameController;
+  CollectionReference? addUser;
+  User? user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +29,7 @@ class SignUpState extends State<SignUp> {
       children: [
         Container(
           alignment: Alignment.topCenter,
-          padding: EdgeInsets.only(top: 20),
+          padding: const EdgeInsets.only(top: 20),
           height: double.infinity,
           width: double.infinity,
           child: SvgPicture.asset(
@@ -31,20 +42,19 @@ class SignUpState extends State<SignUp> {
           ),
         ),
         Container(
-            margin: EdgeInsets.only(top: 200),
+            margin: const EdgeInsets.only(top: 200),
             height: double.infinity,
             width: double.infinity,
             alignment: Alignment.center,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(120))),
-
             //================== محتوي الصفحة =================
-
             child: SingleChildScrollView(
               child: Container(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Form(
+                  key: _formKey,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -55,14 +65,14 @@ class SignUpState extends State<SignUp> {
                             fontWeight: FontWeight.bold,
                             color: Theme.of(context).secondaryHeaderColor),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 22,
                       ),
                       TextFormField(
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.person),
                           hintText: "Name",
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                             fontSize: 18,
                           ),
                           border: OutlineInputBorder(
@@ -73,15 +83,26 @@ class SignUpState extends State<SignUp> {
                           fillColor: Colors.grey[200],
                         ),
                         keyboardType: TextInputType.name,
+                        onSaved: (val) {
+                          setState(() {
+                            _nameController = val!;
+                          });
+                        },
+                        validator: (val) {
+                          if (val!.isEmpty) {
+                            return "Invalid name!";
+                          }
+                          return null;
+                        },
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       TextFormField(
                         decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.phone_in_talk_outlined),
+                          prefixIcon: const Icon(Icons.phone_in_talk_outlined),
                           hintText: "Phone Number",
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                             fontSize: 18,
                           ),
                           border: OutlineInputBorder(
@@ -92,15 +113,37 @@ class SignUpState extends State<SignUp> {
                           fillColor: Colors.grey[200],
                         ),
                         keyboardType: TextInputType.phone,
+                        onSaved: (val) {
+                          setState(() {
+                            _phoneController = val!;
+                          });
+                        },
+                        validator: (val) {
+                          if (val!.isEmpty) {
+                            return "Invalid number!";
+                          }
+                          return null;
+                        },
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       TextFormField(
+                        onSaved: (val) {
+                          setState(() {
+                            _emailController = val!;
+                          });
+                        },
+                        validator: (val) {
+                          if (val!.isEmpty || !val.contains('@')) {
+                            return "Invalid email!";
+                          }
+                          return null;
+                        },
                         decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.email_outlined),
+                          prefixIcon: const Icon(Icons.email_outlined),
                           hintText: "Email",
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                             fontSize: 18,
                           ),
                           border: OutlineInputBorder(
@@ -112,15 +155,15 @@ class SignUpState extends State<SignUp> {
                         ),
                         keyboardType: TextInputType.emailAddress,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       TextFormField(
                         obscureText: true,
                         decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.lock_rounded),
+                          prefixIcon: const Icon(Icons.lock_rounded),
                           hintText: "Password",
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                             fontSize: 18,
                           ),
                           border: OutlineInputBorder(
@@ -131,8 +174,19 @@ class SignUpState extends State<SignUp> {
                           fillColor: Colors.grey[200],
                         ),
                         keyboardType: TextInputType.visiblePassword,
+                        onSaved: (val) {
+                          setState(() {
+                            _passwordController = val!;
+                          });
+                        },
+                        validator: (val) {
+                          if (val!.isEmpty || val.length <= 8) {
+                            return "Password is too short!";
+                          }
+                          return null;
+                        },
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 13,
                       ),
                       DefaultButton(
@@ -141,10 +195,10 @@ class SignUpState extends State<SignUp> {
                         backGroundButton:
                             Theme.of(context).secondaryHeaderColor,
                         function: () {
-                          Navigator.of(context).pushNamed("signUp");
+                          _submit();
                         },
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 12,
                       ),
                       Text(
@@ -153,7 +207,7 @@ class SignUpState extends State<SignUp> {
                             fontSize: 18,
                             color: Theme.of(context).secondaryHeaderColor),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 7,
                       ),
                       Row(
@@ -171,7 +225,7 @@ class SignUpState extends State<SignUp> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 15,
                           ),
                           Container(
@@ -184,7 +238,7 @@ class SignUpState extends State<SignUp> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 15,
                           ),
                           Container(
@@ -202,7 +256,7 @@ class SignUpState extends State<SignUp> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             "Already a member ? ",
                             style: TextStyle(fontSize: 18),
                           ),
@@ -226,5 +280,70 @@ class SignUpState extends State<SignUp> {
             )),
       ],
     ));
+  }
+
+  void _submit() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      UserCredential response = await signUp();
+      User? userID = FirebaseAuth.instance.currentUser;
+      setState(() {
+        user = userID;
+      });
+      await addDataEmail();
+      if (response != null) {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const HomeScreen()));
+      }
+      return;
+    }
+  }
+
+  signUp() async {
+    try {
+      if (_emailController.isNotEmpty &&
+          _passwordController.isNotEmpty &&
+          _nameController!.isNotEmpty &&
+          _phoneController!.isNotEmpty) {
+        UserCredential userCredential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+                email: _emailController, password: _passwordController);
+        return userCredential;
+      } else {}
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.INFO,
+          animType: AnimType.BOTTOMSLIDE,
+          title: 'Attend  !',
+          desc: 'The password is weak',
+          btnCancelOnPress: () {},
+          btnOkOnPress: () {},
+        ).show();
+      } else if (e.code == 'email-already-in-use') {
+        AwesomeDialog(
+          context: context,
+          dialogType: DialogType.INFO,
+          animType: AnimType.BOTTOMSLIDE,
+          title: 'Attend  !',
+          desc: 'This Account is Already Exist',
+          btnOkOnPress: () {},
+        ).show();
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  addDataEmail() async {
+    addUser = FirebaseFirestore.instance.collection('users');
+    addUser?.doc('${user?.uid}').set({
+      'Email': _emailController,
+      'Username': _nameController,
+      'Phone': _phoneController,
+      'ID': user?.uid,
+      'Image': 'null'
+    });
   }
 }

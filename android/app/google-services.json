@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "641014388533",
+    "project_id": "nicu-52f6f",
+    "storage_bucket": "nicu-52f6f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:641014388533:android:27e736245a1d4d56511e7c",
+        "android_client_info": {
+          "package_name": "com.example.nicu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "641014388533-rllp8f1187fodbaqqiiibfrlnmoce3rj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFZJh2jj9Tt-jBSdDyUzsYg8aqnqP8OWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "641014388533-rllp8f1187fodbaqqiiibfrlnmoce3rj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

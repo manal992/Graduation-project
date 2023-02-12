@@ -1,12 +1,12 @@
 import 'package:diamond_bottom_bar/diamond_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:nicu/screen/home_screen/advice/advice.dart';
 import 'package:nicu/screen/home_screen/taps/home_tap.dart';
-import 'package:nicu/screen/home_screen/taps/map_tap.dart';
+import 'package:nicu/screen/home_screen/taps/maps/map.dart';
 import 'package:nicu/screen/home_screen/taps/messages/chats_tap.dart';
 import 'package:nicu/screen/home_screen/taps/notifcation_tap.dart';
 import 'package:nicu/screen/home_screen/taps/profile_tap.dart';
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -18,12 +18,18 @@ class HomeScreen extends StatefulWidget {
 List<Widget> page = [
   const HomeTap(),
   const Notifcation(),
-  const MapTap(),
+  MapPage(),
   Chats(),
   const Profile(),
 ];
 
-List<String>  title = ['NICU','Notification','','Chat','Profile',];
+List<String> title = [
+  'NICU',
+  'Notification',
+  'Map',
+  'Chat',
+  'Profile',
+];
 
 int index = 0;
 
@@ -36,7 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         backgroundColor: Theme.of(context).splashColor,
         centerTitle: true,
-        title: Text(title[index],
+        title: Text(
+          title[index],
           style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 25,
@@ -46,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
-                onTap: () {},
+                onTap: () {Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Advice()));},
                 child: Lottie.asset('asset/lottiefiles/advice1.json')),
           ),
         ],
