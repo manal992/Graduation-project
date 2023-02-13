@@ -44,6 +44,8 @@ dependencies:
   cloud_firestore:
   firebase_storage:
   awesome_dialog:
+  firebase_messaging:
+  external_app_launcher:
 
 
 

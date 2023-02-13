@@ -1,98 +1,159 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
-  const  Profile({Key? key}) : super(key: key);
+  const Profile({Key? key}) : super(key: key);
 
   @override
   State<Profile> createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
+  String user = FirebaseAuth.instance.currentUser!.uid;
+  String name='';
+  String email='';
+  String? imageProfole;
+  String  phone='';
+
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      backgroundColor: Theme.of(context).splashColor,
-
-      body: Container(
-        decoration:   const BoxDecoration(
-          color:Colors.white,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
-        ),
-        child:  SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(14.0),
-                child: Card(
-                  shape:  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14),
-                    side: BorderSide(color:Theme.of(context).primaryColor),
-                  ),
-                  elevation: 6,
-                  color: Theme.of(context).splashColor,
-                  child: Container(
-                    padding: EdgeInsets.all(18),
-                    margin: EdgeInsets.all(18),
-                    decoration:   BoxDecoration(
-
-                      color:Theme.of(context).splashColor,
+    return Scaffold(
+        backgroundColor: Theme.of(context).splashColor,
+        body: Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30.0),
+                topRight: Radius.circular(30.0)),
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                      side: BorderSide(color: Theme.of(context).primaryColor),
                     ),
-                    child: Column(
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children:  [
-                            CircleAvatar(
-                              backgroundImage: NetworkImage('https://cdn.pixabay.com/photo/2019/05/04/15/24/woman-4178302_960_720.jpg'),
-                              radius:35,
-                            ),
-                            SizedBox(width: 20,),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Manal Hemeda',style: TextStyle(fontSize: 20 ,fontWeight:FontWeight.bold ,color:Theme.of(context).secondaryHeaderColor),),
-                                SizedBox(height: 10,),
-                                Row(
-                                  children: [
-                                    Icon(Icons.email ,color:Theme.of(context).secondaryHeaderColor,),
-                                    SizedBox(width: 10,),
-                                    Text('manalhemeda@182001',style: TextStyle(color:Theme.of(context).secondaryHeaderColor),),
-                                  ],
-                                ),
-                                SizedBox(height:5,),
-                                Row(
-                                  children: [
-                                    Icon(Icons.call ,color:Theme.of(context).secondaryHeaderColor,),
-                                    SizedBox(width: 10,),
-                                    Text('01065372465',style:TextStyle(color:Theme.of(context).secondaryHeaderColor)),
-                                  ],
-                                ),
-                                SizedBox(height:5,),
-                                Row(
-                                  children: [
-                                    Icon(Icons.location_on ,color:Theme.of(context).secondaryHeaderColor,),
-                                    SizedBox(width: 10,),
-                                    Text('kom_hamada,elbehera',style:TextStyle(color:Theme.of(context).secondaryHeaderColor)),
-                                  ],
-                                ),
-                                SizedBox(height:5,),
-                              ],
-                            )
-                          ],
-                        )
-                      ],
+                    elevation: 6,
+                    color: Theme.of(context).splashColor,
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      margin: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).splashColor,
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CircleAvatar(
+                                backgroundImage: NetworkImage(
+                                    'https://cdn.pixabay.com/photo/2019/05/04/15/24/woman-4178302_960_720.jpg'),
+                                radius: 25,
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                     name,
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Theme.of(context)
+                                            .secondaryHeaderColor),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.email,
+                                        color: Theme.of(context)
+                                            .secondaryHeaderColor,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                         email,
+                                        style: TextStyle(
+                                            color: Theme.of(context)
+                                                .secondaryHeaderColor),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.call,
+                                        color: Theme.of(context)
+                                            .secondaryHeaderColor,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text( phone,
+                                          style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .secondaryHeaderColor)),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.location_on,
+                                        color: Theme.of(context)
+                                            .secondaryHeaderColor,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text('kom_hamada,elbehera',
+                                          style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .secondaryHeaderColor)),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                ],
+                              )
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                child: SingleChildScrollView(
-                  physics: const ScrollPhysics(),
-                  child: Column(
-                    children: [
-                      ListView.builder(
-                        padding:EdgeInsets.symmetric(horizontal: 10),
+                FutureBuilder(
+                  future: getPosts(),
+                  builder: (context,snapshot){
+                    if(snapshot.hasData){
+                      List data= snapshot.data as List;
+                      print(data);
+                      return ListView.builder(
+                        padding:const EdgeInsets.symmetric(horizontal: 10),
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemBuilder: (context, index) => Card(
@@ -101,6 +162,7 @@ class _ProfileState extends State<Profile> {
                               borderRadius: BorderRadius.circular(25),
                               side: const BorderSide(color: Colors.grey)),
                           child: Container(
+
                             padding: const EdgeInsets.all(13),
                             margin: const EdgeInsets.all(10),
                             decoration: const BoxDecoration(
@@ -123,9 +185,10 @@ class _ProfileState extends State<Profile> {
                                     ),
                                     Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
+
                                       children: [
-                                        const Text(
-                                          'Manal Hemida',
+                                        Text(
+                                          data[index]['name'],
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 15),
@@ -133,21 +196,25 @@ class _ProfileState extends State<Profile> {
                                         const SizedBox(
                                           height: 3,
                                         ),
-                                        const Text('Nov 13,2022'),
+                                        Text(data[index]['date']),
                                       ],
                                     ),
                                     Expanded(child: Container()),
-                                    const Text('11:41 PM'),
+                                    Text(data[index]['time']),
                                   ],
                                 ),
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                const Text(
-                                  'ربي اني مسني الضر وانت ارحم الراحمين',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 20),
+                                Text(data[index]['Description'] ,
+                                  style: TextStyle(fontSize: 18 , fontWeight: FontWeight.bold ,),
                                 ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                data[index]['imageurl'] !='null'? Image.network(data[index]['imageurl']):Container(),
+
+
                                 const SizedBox(
                                   height: 15,
                                 ),
@@ -193,17 +260,36 @@ class _ProfileState extends State<Profile> {
                             ),
                           ),
                         ),
-                        itemCount: 100,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+                        itemCount: data.length,
+                      );
+                    }else{
+                      return const CircularProgressIndicator();
+                    }
+                  },)
+              ],
+            ),
           ),
-        ),
-      )
+        ));
+  }
 
-    );
+  getPosts() async {
+    var firestore = FirebaseFirestore.instance;
+    QuerySnapshot qn = await firestore.collection("Post").where('user', isEqualTo: user).get();
+    return qn.docs;
+  }
+
+  getData() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user)
+        .get()
+        .then((value) {
+      setState(() {
+        name = value['Username'];
+        imageProfole = value['Image'];
+        email = value['Email'];
+        phone = value['Phone'];
+      });
+    });
   }
 }

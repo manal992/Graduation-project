@@ -38,10 +38,10 @@ class _AdviceState extends State<Advice> {
       ),
       body: Container(
         padding: EdgeInsets.all(10),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
           image: DecorationImage(
-              image: AssetImage('asset/Images/b.png'), opacity: 0.3),
+              image: AssetImage('asset/Images/b.svg'), opacity: 0.3),
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
         ),

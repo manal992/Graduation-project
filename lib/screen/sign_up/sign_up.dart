@@ -3,7 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:nicu/screen/home_screen/first.dart';
 import 'package:nicu/screen/home_screen/home.dart';
+import 'package:nicu/screen/verifay/verifay_email.dart';
 import '../../component/button.dart';
 
 class SignUp extends StatefulWidget {
@@ -60,23 +62,23 @@ class SignUpState extends State<SignUp> {
                     children: [
                       Text(
                         "SIGN UP",
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).secondaryHeaderColor),
+                          style: TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).secondaryHeaderColor),
                       ),
                       const SizedBox(
-                        height: 22,
+                        height: 24,
                       ),
                       TextFormField(
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.person),
                           hintText: "Name",
                           hintStyle: const TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
                           ),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18),
+                            borderRadius: BorderRadius.circular(16),
                             borderSide: BorderSide.none,
                           ),
                           filled: true,
@@ -96,17 +98,17 @@ class SignUpState extends State<SignUp> {
                         },
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 16,
                       ),
                       TextFormField(
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.phone_in_talk_outlined),
                           hintText: "Phone Number",
                           hintStyle: const TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
                           ),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18),
+                            borderRadius: BorderRadius.circular(16),
                             borderSide: BorderSide.none,
                           ),
                           filled: true,
@@ -126,7 +128,7 @@ class SignUpState extends State<SignUp> {
                         },
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 16,
                       ),
                       TextFormField(
                         onSaved: (val) {
@@ -144,10 +146,10 @@ class SignUpState extends State<SignUp> {
                           prefixIcon: const Icon(Icons.email_outlined),
                           hintText: "Email",
                           hintStyle: const TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
                           ),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18),
+                            borderRadius: BorderRadius.circular(16),
                             borderSide: BorderSide.none,
                           ),
                           filled: true,
@@ -156,7 +158,7 @@ class SignUpState extends State<SignUp> {
                         keyboardType: TextInputType.emailAddress,
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 16,
                       ),
                       TextFormField(
                         obscureText: true,
@@ -164,10 +166,10 @@ class SignUpState extends State<SignUp> {
                           prefixIcon: const Icon(Icons.lock_rounded),
                           hintText: "Password",
                           hintStyle: const TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
                           ),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18),
+                            borderRadius: BorderRadius.circular(16),
                             borderSide: BorderSide.none,
                           ),
                           filled: true,
@@ -187,7 +189,7 @@ class SignUpState extends State<SignUp> {
                         },
                       ),
                       const SizedBox(
-                        height: 13,
+                        height: 20,
                       ),
                       DefaultButton(
                         text: 'SIGN UP',
@@ -199,13 +201,14 @@ class SignUpState extends State<SignUp> {
                         },
                       ),
                       const SizedBox(
-                        height: 12,
+                        height: 14,
                       ),
                       Text(
                         "OR SIGN UP WITH",
                         style: TextStyle(
                             fontSize: 18,
-                            color: Theme.of(context).secondaryHeaderColor),
+                            color: Theme.of(context).secondaryHeaderColor,
+                            fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(
                         height: 7,
@@ -267,9 +270,10 @@ class SignUpState extends State<SignUp> {
                               child: Text(
                                 "SIGN IN",
                                 style: TextStyle(
-                                    fontSize: 15,
-                                    color:
-                                        Theme.of(context).secondaryHeaderColor),
+                                  fontSize: 15,
+                                  color: Theme.of(context).secondaryHeaderColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ))
                         ],
                       ),
@@ -293,7 +297,7 @@ class SignUpState extends State<SignUp> {
       await addDataEmail();
       if (response != null) {
         Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const HomeScreen()));
+            MaterialPageRoute(builder: (context) => const  Verifying_Email()));
       }
       return;
     }
