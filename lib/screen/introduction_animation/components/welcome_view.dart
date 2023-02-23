@@ -70,7 +70,7 @@ class WelcomeView extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               SlideTransition(
@@ -94,4 +94,7 @@ class WelcomeView extends StatelessWidget {
       ),
     );
   }
+
+
+
 }

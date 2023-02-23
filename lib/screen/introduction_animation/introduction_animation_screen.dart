@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import '../check_permission/check_permission.dart';
 import '../first_page/first_page.dart';
 import 'components/care_view.dart';
 import 'components/center_next_button.dart';
@@ -114,6 +115,6 @@ class _IntroductionAnimationScreenState
   }
 
   void _signUpClick() {
-    Navigator.of(context).push(MaterialPageRoute(builder:(context)=>FirstPage()));
+    Navigator.of(context).push(MaterialPageRoute(builder:(context)=>const Test()));
   }
 }
