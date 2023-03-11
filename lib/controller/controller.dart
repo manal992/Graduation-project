@@ -35,8 +35,6 @@ class ProviderController extends ChangeNotifier {
     return sliderData;
   }
 
-
-
   Future checkLocation() async {
     Geolocator.checkPermission().then((value) {
       if (value == LocationPermission.denied) {
@@ -45,15 +43,19 @@ class ProviderController extends ChangeNotifier {
             // Geolocator.requestPermission();
           } else if (value == LocationPermission.whileInUse) {
             locationPermission = LocationPermission.whileInUse;
-            getCurrentLocation();
+            // getCurrentLocation();
           } else {}
         });
       } else {
         locationPermission = LocationPermission.whileInUse;
-        getCurrentLocation();
+        // getCurrentLocation();
       }
     });
     return locationPermission;
+  }
+
+  Future check() async {
+    return Geolocator.requestPermission();
   }
 
   Future<Position?> getCurrentLocation() async {

@@ -2,8 +2,10 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:nicu/controller/controller.dart';
 import 'package:nicu/screen/forget_password_screen/forget_password.dart';
 import 'package:nicu/screen/home_screen/first.dart';
+import 'package:provider/provider.dart';
 import '../../component/button.dart';
 
 class SignIn extends StatefulWidget {
@@ -32,13 +34,13 @@ class SignInState extends State<SignIn> {
           padding: const EdgeInsets.only(top: 20),
           height: double.infinity,
           width: double.infinity,
+          decoration: BoxDecoration(
+            color: Theme.of(context).secondaryHeaderColor,
+          ),
           child: SvgPicture.asset(
             "asset/Images/b.svg",
             width: 200,
             height: 170,
-          ),
-          decoration: BoxDecoration(
-            color: Theme.of(context).secondaryHeaderColor,
           ),
         ),
         Container(
@@ -253,8 +255,10 @@ class SignInState extends State<SignIn> {
       _formKey.currentState!.save();
       var user = await login();
       if (user != null) {
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const HomePage()));
+       context.read<ProviderController>().getCurrentLocation().whenComplete(() {
+         Navigator.of(context).pushReplacement(
+             MaterialPageRoute(builder: (context) => const HomePage()));
+       });
       }
     } else {
       print('error');

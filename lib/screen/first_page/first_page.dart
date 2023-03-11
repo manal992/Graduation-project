@@ -18,7 +18,7 @@ class FirstPageState extends State<FirstPage> {
       children: [
         Container(
           alignment: Alignment.topCenter,
-          padding: EdgeInsets.only(top: 45),
+          padding: const EdgeInsets.only(top: 45),
           height: double.infinity,
           width: double.infinity,
           decoration:
@@ -30,34 +30,34 @@ class FirstPageState extends State<FirstPage> {
           ),
         ),
         Container(
-          margin: EdgeInsets.only(top: 260),
+          margin: const EdgeInsets.only(top: 260),
           height: double.infinity,
           width: double.infinity,
           alignment: Alignment.center,
           decoration: BoxDecoration(
               color: Theme.of(context).backgroundColor,
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(120))),
+              borderRadius: const BorderRadius.only(topLeft: Radius.circular(120))),
           child: Column(
 
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 110,
               ),
               Container(
-                padding: EdgeInsets.symmetric(vertical: 13, horizontal: 6),
+                padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 6),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).splashColor,
+                  border: Border.all(
+                      width: 3, color: Theme.of(context).primaryColor),
+                  borderRadius: const BorderRadius.all(Radius.circular(14)),
+                ),
                 child: Text("We Hope To Be Healthy",
                     style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).secondaryHeaderColor)),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).splashColor,
-                  border: Border.all(
-                      width: 3, color: Theme.of(context).primaryColor),
-                  borderRadius: BorderRadius.all(Radius.circular(14)),
-                ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 70,
               ),
               Row(
@@ -71,7 +71,7 @@ class FirstPageState extends State<FirstPage> {
                       Navigator.of(context).pushNamed("signIn");
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 25,
                   ),
                   DefaultButton(

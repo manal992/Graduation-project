@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
@@ -392,7 +391,7 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
                         layers: [
                           TileLayerOptions(
                             urlTemplate:
-                                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                             subdomains: ['a', 'b', 'c'],
                           ),
                           MarkerLayerOptions(markers: [
@@ -414,7 +413,7 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
                                             height: 20,
                                             decoration: BoxDecoration(
                                                 color:
-                                                    Colors.green.withOpacity(1),
+                                                Colors.green.withOpacity(1),
                                                 shape: BoxShape.circle),
                                           ),
                                         ),
@@ -438,45 +437,9 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
                 child: Column(
                   children: [
                     const SizedBox(
-                      height: 40,
+                      height: 10,
                     ),
-                    Row(
-                      children: [
-                        Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          color: Colors.white,
-                          elevation: 2,
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.arrow_back_ios_new_outlined,
-                              size: 26,
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const HomePage()));
-                            },
-                          ),
-                        ),
-                        Expanded(child: Container()),
-                        Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          color: Colors.white,
-                          elevation: 2,
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.search_sharp,
-                              size: 26,
-                            ),
-                            onPressed: () {},
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+
                     Container(
                         height: 40,
                         margin: const EdgeInsets.only(left: 15),
@@ -674,7 +637,7 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
               //   ),
               // ),
               Positioned(
-                  bottom: 30,
+                  bottom: 90,
                   right: 15,
                   child: Card(
                     shape: RoundedRectangleBorder(

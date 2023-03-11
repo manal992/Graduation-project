@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:nicu/apply.dart';
+import 'package:nicu/screen/hospital_info/apply.dart';
 import 'package:nicu/component/colors.dart';
 import 'package:nicu/controller/controller.dart';
 import 'package:nicu/screen/check_permission/check_permission.dart';
@@ -12,7 +12,9 @@ import 'package:nicu/screen/home_screen/first.dart';
 import 'package:nicu/screen/home_screen/home.dart';
 import 'package:nicu/screen/home_screen/taps/messages/chats_tap.dart';
 import 'package:nicu/screen/home_screen/taps/messages/message_screen.dart';
+import 'package:nicu/screen/hospital_info/hospital_info.dart';
 import 'package:nicu/screen/introduction_animation/introduction_animation_screen.dart';
+import 'package:nicu/screen/map/map.dart';
 import 'package:nicu/screen/sign_in/sign_in.dart';
 import 'package:nicu/screen/sign_up/sign_up.dart';
 import 'package:nicu/screen/splash_screen/splash.dart';
@@ -34,7 +36,7 @@ class MyApp extends StatelessWidget {
       create: (context) => ProviderController(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: const Test(),
+        home:  HospitalInfo(),
         routes: {
           "signIn": (context) => SignIn(),
           "signUp": (context) => SignUp(),
