@@ -10,18 +10,18 @@ import 'package:nicu/screen/forget_password_screen/forget_password.dart';
 import 'package:nicu/screen/home_screen/create_post.dart';
 import 'package:nicu/screen/home_screen/first.dart';
 import 'package:nicu/screen/home_screen/home.dart';
-import 'package:nicu/screen/home_screen/taps/messages/chats_tap.dart';
-import 'package:nicu/screen/home_screen/taps/messages/message_screen.dart';
 import 'package:nicu/screen/hospital_info/hospital_info.dart';
 import 'package:nicu/screen/introduction_animation/introduction_animation_screen.dart';
 import 'package:nicu/screen/map/map.dart';
+import 'package:nicu/screen/nicu_chat/screens/splash_screen.dart';
 import 'package:nicu/screen/sign_in/sign_in.dart';
 import 'package:nicu/screen/sign_up/sign_up.dart';
-import 'package:nicu/screen/splash_screen/splash.dart';
+
 import 'package:provider/provider.dart';
 import 'screen/first_page/first_page.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
+late Size mq;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
       create: (context) => ProviderController(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home:  HospitalInfo(),
+        home:    SignIn(),
         routes: {
           "signIn": (context) => SignIn(),
           "signUp": (context) => SignUp(),

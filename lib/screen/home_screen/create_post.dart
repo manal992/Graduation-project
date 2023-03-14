@@ -61,7 +61,8 @@ class _CreatePostState extends State<CreatePost> {
             child: InkWell(
                 onTap: () async {
                   await addData();
-                  Navigator.push(context, MaterialPageRoute(builder:(context)=>HomePage()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomePage()));
                 },
                 child: Lottie.asset('asset/lottiefiles/add_post.json')),
           ),
@@ -91,12 +92,16 @@ class _CreatePostState extends State<CreatePost> {
                       borderRadius: BorderRadius.circular(32),
                       color: Colors.white,
                     ),
-                    child: IconButton(
-                      icon: const Icon(
-                        Icons.person,
-                      ),
-                      onPressed: () {},
-                    ),
+                    child: image != 'null'
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(32),
+                            child: Image.network(
+                              image!,
+                              fit: BoxFit.fill,
+                            ))
+                        : const Icon(
+                            Icons.person,
+                          ),
                   ),
                   const SizedBox(
                     width: 3,
@@ -273,8 +278,8 @@ class _CreatePostState extends State<CreatePost> {
         .get()
         .then((value) {
       setState(() {
-        name = value['Username'];
-        image = value['Image'];
+        name = value['name'];
+        image = value['image'];
       });
     });
   }

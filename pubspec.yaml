@@ -56,6 +56,9 @@ dependencies:
   internet_connection_checker: ^0.0.1+4
   cached_network_image:
   flutter_rating_bar:
+  emoji_picker_flutter: ^1.5.1
+  google_sign_in: ^5.4.2
+  gallery_saver: ^2.3.2
 
 
 

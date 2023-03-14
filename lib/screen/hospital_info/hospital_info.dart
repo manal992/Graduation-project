@@ -71,9 +71,6 @@ class _HospitalInfoState extends State< HospitalInfo> {
                             const SizedBox(
                               height: 10,
                             ),
-                            const SizedBox(
-                              height: 5,
-                            ),
                             Row(
                               children: [
                                  InkWell(

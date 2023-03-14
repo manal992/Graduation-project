@@ -62,10 +62,10 @@ class SignUpState extends State<SignUp> {
                     children: [
                       Text(
                         "SIGN UP",
-                          style: TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).secondaryHeaderColor),
+                        style: TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).secondaryHeaderColor),
                       ),
                       const SizedBox(
                         height: 24,
@@ -297,7 +297,7 @@ class SignUpState extends State<SignUp> {
       await addDataEmail();
       if (response != null) {
         Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const  Verifying_Email()));
+            MaterialPageRoute(builder: (context) => const Verifying_Email()));
       }
       return;
     }
@@ -341,13 +341,18 @@ class SignUpState extends State<SignUp> {
   }
 
   addDataEmail() async {
+    final time = DateTime.now().millisecondsSinceEpoch.toString();
     addUser = FirebaseFirestore.instance.collection('users');
     addUser?.doc('${user?.uid}').set({
-      'Email': _emailController,
-      'Username': _nameController,
+      'email': _emailController,
+      'name': _nameController,
       'Phone': _phoneController,
-      'ID': user?.uid,
-      'Image': 'null'
+      'id': user?.uid,
+      'image': 'null',
+      'createdAt': time,
+      'isOnline': false,
+      'lastActive': time,
+      'pushToken': ''
     });
   }
 }
