@@ -1,12 +1,15 @@
 import 'package:diamond_bottom_bar/diamond_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nicu/screen/home_screen/advice/advice.dart';
 import 'package:nicu/screen/home_screen/taps/home_tap.dart';
 import 'package:nicu/screen/home_screen/taps/notifcation_tap.dart';
 import 'package:nicu/screen/home_screen/taps/profile_tap.dart';
 import 'package:nicu/screen/map/map.dart';
+import 'package:provider/provider.dart';
 
+import '../../controller/controller.dart';
 import '../nicu_chat/screens/home_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -95,6 +98,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
+      floatingActionButton:FloatingActionButton(onPressed: () {
+        context.read<ProviderController>().getCurrentLocation().whenComplete((){
+          Navigator.push(context,  MaterialPageRoute(builder: (context)=>MapPage()));
+        });
+      },child: const Icon(Icons.location_on),) ,
       // bottomNavigationBar: DiamondBottomNavigation(
       //
       //   itemIcons: const [

@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -110,9 +109,9 @@ class SignInState extends State<SignIn> {
                       ),
                       TextFormField(
                         obscureText: true,
-                        scrollPadding: EdgeInsets.all(5),
+                        scrollPadding: const EdgeInsets.all(5),
                         decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.lock_rounded),
+                          prefixIcon: const Icon(Icons.lock_rounded),
                           hintText: "Password",
                           hintStyle: const TextStyle(
                             fontSize: 16,

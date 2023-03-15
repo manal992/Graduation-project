@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
@@ -56,6 +55,14 @@ class ProviderController extends ChangeNotifier {
 
   Future check() async {
     return Geolocator.requestPermission();
+    // Geolocator.checkPermission().then((value) {
+    //   if (value == LocationPermission.denied) {
+    //     return Geolocator.requestPermission();
+    //   }else{
+    //     return Geolocator.checkPermission();
+    //   }
+    // });
+    // notifyListeners();
   }
 
   Future<Position?> getCurrentLocation() async {

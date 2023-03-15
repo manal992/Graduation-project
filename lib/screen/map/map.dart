@@ -382,8 +382,8 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
                             MarkerClusterPlugin(),
                             const LocationMarkerPlugin(),
                           ],
-                          // center: LatLng(x.lat!, x.long!),
-                          center: LatLng(30.635478259074432, 31.0902948107),
+                           center: LatLng(x.lat!, x.long!),
+                          // center: LatLng(30.635478259074432, 31.0902948107),
                           // interactiveFlags: InteractiveFlag.drag |
                           //     InteractiveFlag.pinchMove |
                           //     InteractiveFlag.pinchZoom
