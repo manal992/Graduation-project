@@ -80,49 +80,58 @@ class _CreatePostState extends State<CreatePost> {
             const SizedBox(
               height: 10,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0, top: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(32),
-                      color: Colors.white,
-                    ),
-                    child: image != 'null'
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(32),
-                            child: Image.network(
-                              image!,
-                              fit: BoxFit.fill,
-                            ))
-                        : const Icon(
-                            Icons.person,
-                          ),
-                  ),
-                  const SizedBox(
-                    width: 3,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          name,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1
-                              ?.copyWith(fontSize: 18),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
+           FutureBuilder(
+               future: getProfileData(),
+               builder: (context,snapshot){
+             if(snapshot.hasData){
+               var data = snapshot.data;
+               return  Padding(
+                 padding: const EdgeInsets.only(left: 20.0, top: 20),
+                 child: Row(
+                   mainAxisAlignment: MainAxisAlignment.start,
+                   children: [
+                     Container(
+                       width: 60,
+                       height: 60,
+                       decoration: BoxDecoration(
+                         borderRadius: BorderRadius.circular(32),
+                         color: Colors.white,
+                       ),
+                       child: data['image'] != 'null'
+                           ? ClipRRect(
+                           borderRadius: BorderRadius.circular(32),
+                           child: Image.network(
+                             data['image'],
+                             fit: BoxFit.fill,
+                           ))
+                           : const Icon(
+                         Icons.person,
+                       ),
+                     ),
+                     const SizedBox(
+                       width: 3,
+                     ),
+                     Expanded(
+                       child: Column(
+                         crossAxisAlignment: CrossAxisAlignment.start,
+                         children: [
+                           Text(
+                             name,
+                             style: Theme.of(context)
+                                 .textTheme
+                                 .bodyText1
+                                 ?.copyWith(fontSize: 18),
+                           ),
+                         ],
+                       ),
+                     )
+                   ],
+                 ),
+               );
+             }else{
+               return Center(child: CircularProgressIndicator(),);
+             }
+           }),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(left: 20.0),
@@ -260,6 +269,15 @@ class _CreatePostState extends State<CreatePost> {
         ),
       ),
     );
+  }
+
+  Future getProfileData() async {
+    String user = FirebaseAuth.instance.currentUser!.uid;
+    var firestore = FirebaseFirestore.instance;
+    CollectionReference qn = firestore.collection("users");
+    DocumentReference itemIdRef = qn.doc(user);
+    DocumentSnapshot itemIdSnapshot = await itemIdRef.get();
+    return itemIdSnapshot;
   }
 
   void getToken() async {

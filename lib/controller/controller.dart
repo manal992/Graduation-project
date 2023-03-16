@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
@@ -20,18 +21,16 @@ class ProviderController extends ChangeNotifier {
   int? module;
   bool end = false;
 
-  Future getMarkers() async {
-    String url = 'https://j3o3r.mocklab.io/thing/8';
-    final res = await http.get(Uri.parse(url));
-    if (res.statusCode == 200) {
-      Map data = json.decode(utf8.decode(res.bodyBytes));
-      sliderData = data;
-    } else {
-      print("Error");
-    }
-    print(hospitalMarkers);
-    // notifyListeners();
-    return sliderData;
+
+  Future getMarkers1(String type) async {
+    var firestore = FirebaseFirestore.instance;
+    QuerySnapshot qn = type == 'all'
+        ? await firestore.collection("hospital").get()
+        : await firestore
+            .collection("hospital")
+            .where('type', isEqualTo: type)
+            .get();
+    return qn.docs;
   }
 
   Future checkLocation() async {
@@ -54,14 +53,14 @@ class ProviderController extends ChangeNotifier {
   }
 
   Future check() async {
-    return Geolocator.requestPermission();
-    // Geolocator.checkPermission().then((value) {
-    //   if (value == LocationPermission.denied) {
-    //     return Geolocator.requestPermission();
-    //   }else{
-    //     return Geolocator.checkPermission();
-    //   }
-    // });
+    // return Geolocator.requestPermission();
+    return Geolocator.checkPermission().then((value) {
+      if (value == LocationPermission.denied) {
+        return Geolocator.requestPermission();
+      } else {
+        return true;
+      }
+    });
     // notifyListeners();
   }
 

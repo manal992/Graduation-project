@@ -36,6 +36,7 @@ List<String> title = [
 ];
 
 int index = 0;
+bool isMaped = false;
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
@@ -58,8 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.all(8.0),
             child: InkWell(
                 onTap: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Advice()));
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const Advice()));
                 },
                 child: Lottie.asset('asset/lottiefiles/advice1.json')),
           ),
@@ -74,6 +75,14 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Stack(
           children: [
             page[index],
+            !isMaped
+                ? Container()
+                : Center(
+                    child: Lottie.network(
+                        'https://assets6.lottiefiles.com/packages/lf20_usmfx6bp.json',
+                        width: 300,
+                        height: 300),
+                  ),
             Align(
               alignment: Alignment.bottomCenter,
               child: DiamondBottomNavigation(
@@ -98,11 +107,24 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      floatingActionButton:FloatingActionButton(onPressed: () {
-        context.read<ProviderController>().getCurrentLocation().whenComplete((){
-          Navigator.push(context,  MaterialPageRoute(builder: (context)=>MapPage()));
-        });
-      },child: const Icon(Icons.location_on),) ,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            isMaped = true;
+          });
+          context
+              .read<ProviderController>()
+              .getCurrentLocation()
+              .whenComplete(() {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => MapPage()));
+            setState(() {
+              isMaped = false;
+            });
+          });
+        },
+        child: const Icon(Icons.location_on),
+      ),
       // bottomNavigationBar: DiamondBottomNavigation(
       //
       //   itemIcons: const [

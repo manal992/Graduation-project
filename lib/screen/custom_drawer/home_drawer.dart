@@ -1,7 +1,7 @@
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nicu/const/drawer_theme.dart';
-
+import 'package:nicu/screen/check_permission/check_permission.dart';
 
 class HomeDrawer extends StatefulWidget {
   const HomeDrawer(
@@ -21,6 +21,7 @@ class HomeDrawer extends StatefulWidget {
 
 class _HomeDrawerState extends State<HomeDrawer> {
   List<DrawerList>? drawerList;
+
   @override
   void initState() {
     setDrawerListArray();
@@ -185,7 +186,9 @@ class _HomeDrawerState extends State<HomeDrawer> {
   }
 
   void onTapped() {
-    print('Doing Something...'); // Print to console.
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (context) => const Test()));
+    FirebaseAuth.instance.signOut();
   }
 
   Widget inkwell(DrawerList listData) {

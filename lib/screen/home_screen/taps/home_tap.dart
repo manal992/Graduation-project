@@ -1,8 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:like_button/like_button.dart';
+import 'package:nicu/screen/add_comment/add_comment.dart';
 import 'package:nicu/screen/home_screen/create_post.dart';
+import 'package:nicu/screen/other_profile/other_profile.dart';
+
+import '../../../const/color.dart';
+import '../../../we_chat/helper/dialogs.dart';
 
 class HomeTap extends StatefulWidget {
   const HomeTap({Key? key}) : super(key: key);
@@ -15,6 +22,14 @@ class _HomeTapState extends State<HomeTap> {
   CollectionReference posts = FirebaseFirestore.instance.collection('Post');
   User? user = FirebaseAuth.instance.currentUser;
 
+  bool comment = false;
+  int currentIndex = 0;
+  TextEditingController comm = TextEditingController();
+  Widget float = Container();
+  String? name;
+  String? imageProfile;
+
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -26,6 +41,8 @@ class _HomeTapState extends State<HomeTap> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   var data = snapshot.data;
+                  name = data['name'];
+                  imageProfile = data['image'];
                   return Padding(
                     padding:
                         const EdgeInsets.only(left: 30, top: 10, bottom: 10),
@@ -109,9 +126,22 @@ class _HomeTapState extends State<HomeTap> {
                               children: [
                                 snapshot.data?.docs[index]['imageProfile'] !=
                                         'null'
-                                    ? CircleAvatar(
-                                        backgroundImage: NetworkImage(snapshot
-                                            .data?.docs[index]['imageProfile']),
+                                    ? InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      OtherProfile(
+                                                          uid: snapshot.data
+                                                                  ?.docs[index]
+                                                              ['user'])));
+                                        },
+                                        child: CircleAvatar(
+                                          backgroundImage: NetworkImage(snapshot
+                                              .data
+                                              ?.docs[index]['imageProfile']),
+                                        ),
                                       )
                                     : const CircleAvatar(
                                         child: Icon(Icons.person),
@@ -163,13 +193,12 @@ class _HomeTapState extends State<HomeTap> {
                               thickness: 1,
                             ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 LikeButton(
                                   size: 25,
-                                  isLiked:snapshot.data?.docs[index]
-                                  ['likes']
-                                  [user!.uid] ??
+                                  isLiked: snapshot.data?.docs[index]['likes']
+                                          [user!.uid] ??
                                       false,
                                   circleColor: const CircleColor(
                                       start: Color(0xff00ddff),
@@ -178,17 +207,17 @@ class _HomeTapState extends State<HomeTap> {
                                     dotPrimaryColor: Color(0xff33b5e5),
                                     dotSecondaryColor: Color(0xff0099cc),
                                   ),
-                                  likeBuilder: (bool isLiked) {
+                                  likeBuilder: (bool isTaped) {
                                     return Icon(
-                                      isLiked
+                                      isTaped
                                           ? Icons.favorite
                                           : Icons.favorite_border,
-                                      color: isLiked ? Colors.red : Colors.grey,
+                                      color: isTaped ? Colors.red : Colors.grey,
                                       size: 30,
                                     );
                                   },
                                   onTap: (isLiked) => onLikeButtonTapped(
-                                      isLiked,
+                                      !isLiked,
                                       snapshot.data?.docs[index]['docID']),
                                 ),
                                 Center(
@@ -199,23 +228,35 @@ class _HomeTapState extends State<HomeTap> {
                                         const BoxDecoration(color: Colors.grey),
                                   ),
                                 ),
-                                Row(
-                                  children: const [
-                                    Icon(Icons.mode_comment_outlined),
-                                    Text('7'),
-                                  ],
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).push(AddComment(
+                                        title: 'This is a title',
+                                        description:
+                                            'Just some dummy description text',
+                                        id: snapshot.data?.docs[index]['docID'],
+                                        name: name!,
+                                        image: imageProfile!));
+                                  },
+                                  child: const Icon(Icons.mode_comment_outlined),
                                 ),
-                                Center(
-                                  child: Container(
-                                    width: 2,
-                                    height: 25,
-                                    decoration:
-                                        const BoxDecoration(color: Colors.grey),
-                                  ),
+                                Container(
+                                  width: 2,
+                                  height: 25,
+                                  decoration:
+                                      const BoxDecoration(color: Colors.grey),
                                 ),
-                                const Icon(Icons.save),
+                                InkWell(
+                                    onTap: () async {
+                                      await savePost(
+                                          snapshot.data?.docs[index]['docID'],
+                                          user!.uid);
+                                      Dialogs.showSnackbar(
+                                          context, 'Post Saved');
+                                    },
+                                    child: const Icon(Icons.save)),
                               ],
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -274,5 +315,27 @@ class _HomeTapState extends State<HomeTap> {
     DocumentSnapshot itemIdSnapshot = await itemIdRef.get();
     print(itemIdSnapshot['name']);
     return itemIdSnapshot;
+  }
+
+  savePost(String id, String? userID) async {
+    CollectionReference addUser =
+        FirebaseFirestore.instance.collection('users');
+    addUser.doc('$userID').set({
+      "Posts": FieldValue.arrayUnion([id])
+    }, SetOptions(merge: true));
+  }
+
+  addComment(String id, String comment, String name) async {
+    var currentUser = FirebaseAuth.instance.currentUser?.uid;
+    DocumentReference addPost =
+        FirebaseFirestore.instance.collection('Post').doc(id);
+    addPost.collection('comments').add({
+      'name': name,
+      'image': imageProfile,
+      'iD': currentUser,
+      'description': comment,
+      'time': DateFormat('hh:mm a').format(DateTime.now()).toString(),
+      'date': DateFormat('yyyy-MM-dd').format(DateTime.now()).toString(),
+    });
   }
 }

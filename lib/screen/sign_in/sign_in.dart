@@ -228,9 +228,9 @@ class SignInState extends State<SignIn> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
+                           Text(
                             "Do you create new account ? ",
-                            style: TextStyle(fontSize: 18),
+                            style: TextStyle(fontSize: 18,color: Theme.of(context).secondaryHeaderColor),
                           ),
                           TextButton(
                               onPressed: () {
