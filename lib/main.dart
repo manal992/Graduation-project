@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
           "signUp": (context) => SignUp(),
           "firstPage": (context) => FirstPage()
         },
-        themeMode: ThemeMode.system,
+        themeMode: ThemeMode.light,
         theme: ThemeData(
           brightness: Brightness.light,
           primaryColor: HexColor.fromHex("#5F7EAA"),
@@ -50,8 +50,11 @@ class MyApp extends StatelessWidget {
           splashColor: HexColor.fromHex("#EAE3D1"),
           backgroundColor: Colors.white,
         ),
-        darkTheme:
-            ThemeData(brightness: Brightness.dark, primaryColor: Colors.white),
+        darkTheme: ThemeData(
+          brightness: Brightness.dark,
+          primaryColor: Colors.white,
+          backgroundColor: Colors.white,
+        ),
       ),
     );
   }
