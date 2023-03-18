@@ -16,7 +16,7 @@ import 'package:nicu/screen/map/map.dart';
 import 'package:nicu/screen/nicu_chat/screens/splash_screen.dart';
 import 'package:nicu/screen/sign_in/sign_in.dart';
 import 'package:nicu/screen/sign_up/sign_up.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'screen/first_page/first_page.dart';
 
@@ -36,7 +36,9 @@ class MyApp extends StatelessWidget {
       create: (context) => ProviderController(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: const Test(),
+        home: FirebaseAuth.instance.currentUser == null
+            ? const Test()
+            : const HomePage(),
         routes: {
           "signIn": (context) => SignIn(),
           "signUp": (context) => SignUp(),

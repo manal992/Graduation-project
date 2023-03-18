@@ -16,6 +16,8 @@ import '../home_screen/first.dart';
 
 import 'package:lottie/lottie.dart' as lo;
 
+import '../hospital_info/hospital_info.dart';
+
 class MapPage extends StatefulWidget {
   MapPage({Key? key}) : super(key: key);
 
@@ -29,10 +31,16 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
   Timer? timer;
   String typeHospital = 'all';
   List<Marker> mark = [];
+  int typeIndex = 6;
   List type = [
     'government Hospital',
     "charity Center",
     "special Center",
+  ];
+  List type1 = [
+    'governmentHospital',
+    "charityCenter",
+    "specialCenter",
   ];
 
   late AnimationController _controller;
@@ -95,7 +103,7 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
       body: Stack(
         children: [
           FutureBuilder(
-              future: x.getMarkers1('all'),
+              future: x.getMarkers1(typeHospital),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   List data = snapshot.data as List;
@@ -130,25 +138,35 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
                         ...data.map((e) => Marker(
                             width: 50,
                             height: 50,
-                            point: LatLng(double.parse(e['late']),
-                                double.parse(e['long'])),
-                            builder: (BuildContext context) => Stack(
-                                  children: [
-                                    CustomPaint(
-                                      size: const Size(180, 110),
-                                      painter:
-                                          RPSCustomPainter(color: Colors.red),
-                                    ),
-                                    const Positioned(
-                                      right: 11,
-                                      top: 5,
-                                      child: Icon(
-                                        Icons.local_hospital,
-                                        color: Colors.white,
-                                        size: 27.0,
+                            point: LatLng(double.parse('${e['late']}'),
+                                double.parse('${e['long']}')),
+                            builder: (BuildContext context) => InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                HospitalInfo(uid: e['uid'])));
+                                  },
+                                  child: Stack(
+                                    children: [
+                                      CustomPaint(
+                                        size: const Size(180, 110),
+                                        painter: RPSCustomPainter(
+                                            color:
+                                                HexColor.fromHex(e['color'])),
                                       ),
-                                    ),
-                                  ],
+                                      const Positioned(
+                                        right: 11,
+                                        top: 5,
+                                        child: Icon(
+                                          Icons.local_hospital,
+                                          color: Colors.white,
+                                          size: 27.0,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ))),
                         Marker(
                           width: 100,
@@ -190,7 +208,7 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
             child: Column(
               children: [
                 const SizedBox(
-                  height: 100,
+                  height: 80,
                 ),
                 Container(
                     height: 60,
@@ -204,27 +222,33 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
                       itemCount: type.length,
                       itemBuilder: (context, index) => ElevatedButton.icon(
                         onPressed: () {
-                          typeHospital = type[index];
-                          print(index);
-                          print(typeHospital);
+                          setState(() {
+                            typeIndex = index;
+                            typeHospital = type1[index];
+                          });
                         },
-                        icon: const Icon(
-                          Icons.local_hospital_outlined,
-                          color: Colors.green,
-                          size: 23,
+                        icon: Icon(
+                          Icons.local_hospital,
+                          color: Colors.white,
+                          size: 27.0,
                         ),
                         label: Text(
                           type[index],
-                          style: TextStyle(color: HexColor.fromHex('#3c3f41')),
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 15),
                         ),
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(
-                                Theme.of(context).splashColor),
+                                typeIndex == index
+                                    ? Colors.teal.shade400.withOpacity(0.5)
+                                    : Colors.white10),
                             shape: MaterialStateProperty.all(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15),
                                     side: const BorderSide(
-                                        color: Colors.green)))),
+                                        color: Colors.black)))),
                       ),
                     )),
                 const SizedBox(
@@ -233,162 +257,8 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
               ],
             ),
           ),
-          // Align(
-          //   alignment: Alignment.bottomLeft,
-          //   child: Container(
-          //     height: 140,
-          //     margin: const EdgeInsets.symmetric(vertical: 20.0),
-          //     child: FutureBuilder(
-          //       future: context.read<LoginController>().getDataUser(),
-          //       builder: (context, snapshot) {
-          //         final map = context.read<LoginController>().userData;
-          //         return buildPageView(x.sliderData, context, map);
-          //       },
-          //     ),
-          //
-          //     // ListView.builder(
-          //     //   itemBuilder: (context, index) => Padding(
-          //     //     padding: const EdgeInsets.all(8.0),
-          //     //     child: GestureDetector(
-          //     //       onTap: () async {
-          //     //         Navigator.of(context).push(MaterialPageRoute(
-          //     //             builder: (context) => shop(
-          //     //                   id: x.sliderData[index]['id'],
-          //     //                 )));
-          //     //       },
-          //     //       child: Container(
-          //     //         decoration: const BoxDecoration(
-          //     //           color: Colors.white,
-          //     //           borderRadius: BorderRadius.only(
-          //     //               topLeft: Radius.circular(25),
-          //     //               topRight: Radius.circular(25)),
-          //     //         ),
-          //     //         child: Column(
-          //     //           children: <Widget>[
-          //     //             SizedBox(
-          //     //               width: 290,
-          //     //               height: 190,
-          //     //               child: ClipRRect(
-          //     //                 borderRadius: const BorderRadius.only(
-          //     //                     topLeft: Radius.circular(25),
-          //     //                     topRight: Radius.circular(25)),
-          //     //                 child: Image(
-          //     //                   fit: BoxFit.cover,
-          //     //                   image:
-          //     //                       NetworkImage(x.sliderData[index]['image']),
-          //     //                 ),
-          //     //               ),
-          //     //             ),
-          //     //             Row(
-          //     //               children: [
-          //     //                 Column(
-          //     //                   children: <Widget>[
-          //     //                     Text(
-          //     //                       x.sliderData[index]['name'],
-          //     //                       style: const TextStyle(
-          //     //                           color: Color(0xff6200ee),
-          //     //                           fontSize: 24.0,
-          //     //                           fontWeight: FontWeight.w600),
-          //     //                     ),
-          //     //                     Row(
-          //     //                       children: [
-          //     //                         Text(
-          //     //                           '${x.sliderData[index]['rate']}',
-          //     //                           style: const TextStyle(
-          //     //                               color: Colors.black54,
-          //     //                               fontSize: 18.0,
-          //     //                               fontWeight: FontWeight.w700),
-          //     //                         ),
-          //     //                         const SizedBox(
-          //     //                           width: 10,
-          //     //                         ),
-          //     //                         Row(
-          //     //                           children: [
-          //     //                             SizedBox(
-          //     //                                 height: 30,
-          //     //                                 child: ListView.builder(
-          //     //                                   scrollDirection:
-          //     //                                       Axis.horizontal,
-          //     //                                   shrinkWrap: true,
-          //     //                                   itemCount: x.sliderData[index]
-          //     //                                       ['rate'],
-          //     //                                   itemBuilder: (context, index) =>
-          //     //                                       const Icon(
-          //     //                                     FontAwesomeIcons.solidStar,
-          //     //                                     color: Colors.amber,
-          //     //                                     size: 18.0,
-          //     //                                   ),
-          //     //                                 )),
-          //     //                             SizedBox(
-          //     //                                 height: 30,
-          //     //                                 child: ListView.builder(
-          //     //                                   scrollDirection:
-          //     //                                       Axis.horizontal,
-          //     //                                   shrinkWrap: true,
-          //     //                                   itemCount: -(x.sliderData[index]
-          //     //                                           ['rate']) +
-          //     //                                       5,
-          //     //                                   //  itemCount: 5-int.parse(p.sliderData[index]['rate']),
-          //     //                                   itemBuilder: (context, index) =>
-          //     //                                       const Icon(
-          //     //                                     FontAwesomeIcons.star,
-          //     //                                     color: Colors.amber,
-          //     //                                     size: 18.0,
-          //     //                                   ),
-          //     //                                 )),
-          //     //                           ],
-          //     //                         ),
-          //     //                       ],
-          //     //                     ),
-          //     //                   ],
-          //     //                 ),
-          //     //                 const SizedBox(
-          //     //                   width: 49,
-          //     //                 ),
-          //     //                 InkWell(
-          //     //                   onTap: () {
-          //     //                     mapController.move(LatLng( double.parse(x.sliderData[index]['lat']),
-          //     //                         double.parse(
-          //     //                             x.sliderData[index]['long'])), 17);
-          //     //                     // MapUtils.map(
-          //     //                     //     double.parse(x.sliderData[index]['lat']),
-          //     //                     //     double.parse(
-          //     //                     //         x.sliderData[index]['long']));
-          //     //                   },
-          //     //                   child: const Card(
-          //     //                     color: Colors.white,
-          //     //                     elevation: 0,
-          //     //                     child: Padding(
-          //     //                       padding: EdgeInsets.all(12.0),
-          //     //                       child: Icon(
-          //     //                         FontAwesomeIcons.directions,
-          //     //                         size: 40,
-          //     //                         color: Colors.deepOrange,
-          //     //                       ),
-          //     //                     ),
-          //     //                   ),
-          //     //                 ),
-          //     //               ],
-          //     //             ),
-          //     //             const Text(
-          //     //               "Closed \u00B7 Opens 17:00 Thu",
-          //     //               style: TextStyle(
-          //     //                   color: Colors.black54,
-          //     //                   fontSize: 18.0,
-          //     //                   fontWeight: FontWeight.bold),
-          //     //             ),
-          //     //           ],
-          //     //         ),
-          //     //       ),
-          //     //     ),
-          //     //   ),
-          //     //   itemCount: x.sliderData.length,
-          //     //   scrollDirection: Axis.horizontal,
-          //     // ),
-          //   ),
-          // ),
           Positioned(
-              bottom: 90,
+              bottom: 40,
               right: 15,
               child: Card(
                 shape: RoundedRectangleBorder(

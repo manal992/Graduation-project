@@ -1,6 +1,7 @@
 import 'dart:math';
 
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -8,7 +9,10 @@ import '../../button.dart';
 import '../../const/color.dart';
 
 class apply extends StatefulWidget {
-  apply({Key? key,  }) : super(key: key);
+  String id;
+
+  apply({Key? key, required this.id}) : super(key: key);
+
   @override
   State<apply> createState() => _applyState();
 }
@@ -20,39 +24,40 @@ class _applyState extends State<apply> {
   String? weight;
   int _value = 1;
   String? name;
-  String? email;
   String? image;
   String? phone;
   String? user;
 
-
-  @override
-  void initState() {
-
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffEAE3D1),
+      backgroundColor: const Color(0xffEAE3D1),
       appBar: AppBar(
-        backgroundColor: Color(0xffEAE3D1),
+        backgroundColor: const Color(0xffEAE3D1),
         elevation: 0,
-         title: Text('Back',style: TextStyle(color:Theme.of(context).secondaryHeaderColor ,fontWeight: FontWeight.bold ,fontSize: 22.0 ),),
-        leading: IconButton(
-          onPressed: (){},
-          icon:Icon(Icons.arrow_back_ios_new ,color: Theme.of(context).secondaryHeaderColor),
+        title: Text(
+          'Back',
+          style: TextStyle(
+              color: Theme.of(context).secondaryHeaderColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 22.0),
         ),
-
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back_ios_new,
+              color: Theme.of(context).secondaryHeaderColor),
+        ),
       ),
       body: Container(
         decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.only(topLeft:Radius.circular( 20.0) ,topRight:Radius.circular( 20.0) ),
-           image: DecorationImage(
-            image: AssetImage('asset/Images/b.png'),// background
-            opacity: 0.3 ,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
+          image: DecorationImage(
+            image: AssetImage('asset/Images/b.png'), // background
+            opacity: 0.3,
           ),
         ),
         child: Center(
@@ -72,7 +77,7 @@ class _applyState extends State<apply> {
                         ..translate(-10.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(3),
-                        color: Color(0xffEAE3D1),
+                        color: const Color(0xffEAE3D1),
                         boxShadow: const [
                           BoxShadow(
                             blurRadius: 12,
@@ -81,17 +86,16 @@ class _applyState extends State<apply> {
                           )
                         ],
                       ),
-                      child:   Text(
+                      child: Text(
                         'NICU',
                         style: TextStyle(
-                          color: Theme.of(context).secondaryHeaderColor,
-                          fontSize: 30,
-                          fontWeight: FontWeight.w900
-                        ),
+                            color: Theme.of(context).secondaryHeaderColor,
+                            fontSize: 30,
+                            fontWeight: FontWeight.w900),
                       ),
                     ),
-                    Text('Welcome..' ,
-                        style:  TextStyle(
+                    Text('Welcome..',
+                        style: TextStyle(
                             fontSize: 25.0,
                             fontWeight: FontWeight.bold,
                             color: Theme.of(context).secondaryHeaderColor)),
@@ -99,59 +103,59 @@ class _applyState extends State<apply> {
                       height: 15.0,
                     ),
                     buildTextFormField(
-                        hint: 'Name' ,
+                        hint: 'Name',
                         validate: () => (val) {
-                          if (val!.isEmpty) {
-                            return "ChildrenName is empty" ;
-                          }
-                          return null;
-                        },
+                              if (val!.isEmpty) {
+                                return "ChildrenName is empty";
+                              }
+                              return null;
+                            },
                         onSave: () => (val) {
-                          setState(() {
-                            childrenName = val;
-                          });
-                        },
+                              setState(() {
+                                childrenName = val;
+                              });
+                            },
                         onTap: () {},
-                        label: 'Children Name' ,
+                        label: 'Children Name',
                         sIcon: const Icon(Icons.done)),
                     const SizedBox(
                       height: 20.0,
                     ),
                     buildTextFormField(
-                        hint: 'Phone' ,
+                        hint: 'Phone',
                         validate: () => (val) {
-                          if (val!.isEmpty) {
-                            return "Phone is empty" ;
-                          }
-                          return null;
-                        },
+                              if (val!.isEmpty) {
+                                return "Phone is empty";
+                              }
+                              return null;
+                            },
                         onSave: () => (val) {
-                          setState(() {
-                            phone = val;
-                          });
-                        },
+                              setState(() {
+                                phone = val;
+                              });
+                            },
                         onTap: () {},
-                        label: 'Phone' ,
+                        label: 'Phone',
                         sIcon: const Icon(Icons.done)),
                     const SizedBox(
                       height: 20.0,
                     ),
                     buildTextFormField(
-                        hint: 'Weight' ,
+                        hint: 'Weight',
                         type: TextInputType.number,
                         validate: () => (val) {
-                          if (val!.isEmpty) {
-                            return "Weight is Empty " ;
-                          }
-                          return null;
-                        },
+                              if (val!.isEmpty) {
+                                return "Weight is Empty ";
+                              }
+                              return null;
+                            },
                         onSave: () => (val) {
-                          setState(() {
-                            weight = val;
-                          });
-                        },
+                              setState(() {
+                                weight = val;
+                              });
+                            },
                         onTap: () => () {},
-                        label: 'Weight' ,
+                        label: 'Weight',
                         sIcon: const Icon(Icons.done)),
                     const SizedBox(
                       height: 20.0,
@@ -168,7 +172,7 @@ class _applyState extends State<apply> {
                               color: Colors.black,
                             ),
                             decoration: InputDecoration(
-                              labelText: "Select Date" ,
+                              labelText: "Select Date",
                               labelStyle: GoogleFonts.arimo(
                                 fontSize: 20,
                                 color: Colors.grey[700],
@@ -180,13 +184,18 @@ class _applyState extends State<apply> {
                               ),
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide:   BorderSide( color:Colors.indigo.shade300, width: 1.2)),
+                                  borderSide: BorderSide(
+                                      color: Colors.indigo.shade300,
+                                      width: 1.2)),
                               enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide:   BorderSide( color:Colors.indigo.shade300, width: 1.2)),
+                                  borderSide: BorderSide(
+                                      color: Colors.indigo.shade300,
+                                      width: 1.2)),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
-                                borderSide:   BorderSide( color:Colors.indigo.shade300, width: 1.2),
+                                borderSide: BorderSide(
+                                    color: Colors.indigo.shade300, width: 1.2),
                               ),
                               filled: false,
                               fillColor: Colors.white,
@@ -203,7 +212,7 @@ class _applyState extends State<apply> {
                             if (pickedDate != null) {
                               setState(() {
                                 _birthday?.text =
-                                    DateFormat('yyyy-mm-dd').format(pickedDate);
+                                    DateFormat('yyyy-MM-dd').format(pickedDate);
                               });
                             }
                           },
@@ -222,7 +231,7 @@ class _applyState extends State<apply> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Radio(
-                            activeColor:Theme.of(context).secondaryHeaderColor,
+                            activeColor: Theme.of(context).secondaryHeaderColor,
                             value: 1,
                             groupValue: _value,
                             onChanged: (value) {
@@ -231,7 +240,7 @@ class _applyState extends State<apply> {
                               });
                             }),
                         Text(
-                          "Male" ,
+                          "Male",
                           style: GoogleFonts.arimo(
                             fontSize: 23,
                             fontWeight: FontWeight.bold,
@@ -251,7 +260,7 @@ class _applyState extends State<apply> {
                               });
                             }),
                         Text(
-                          "Female" ,
+                          "Female",
                           style: GoogleFonts.arimo(
                             fontSize: 23,
                             fontWeight: FontWeight.bold,
@@ -308,13 +317,13 @@ class _applyState extends State<apply> {
         ),
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide:   BorderSide( color:Colors.indigo.shade300, width: 1.2)),
+            borderSide: BorderSide(color: Colors.indigo.shade300, width: 1.2)),
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide:   BorderSide( color:Colors.indigo.shade300, width: 1.2)),
+            borderSide: BorderSide(color: Colors.indigo.shade300, width: 1.2)),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide:   BorderSide( color:Colors.indigo.shade300, width: 1.2),
+          borderSide: BorderSide(color: Colors.indigo.shade300, width: 1.2),
         ),
         filled: false,
         fillColor: Colors.white,
@@ -325,11 +334,39 @@ class _applyState extends State<apply> {
       ),
     );
   }
+
   void _submit() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+      getData();
       Navigator.of(context).pop();
     } else {}
   }
 
+  getData() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((value) {
+      addData(widget.id, value['name'], value['email'], value['image']);
+    });
+  }
+
+  addData(String id, String name, email, image) async {
+    CollectionReference request = FirebaseFirestore.instance
+        .collection('hospital')
+        .doc(id)
+        .collection('Request');
+    request.add({
+      "Name": childrenName,
+      "Weight": weight,
+      "Birthday": _birthday!.text,
+      "Gender": _value == 1 ? "Male" : "Female",
+      'Email': email,
+      'phone': phone,
+      'name': name,
+      'image': image
+    });
+  }
 }
