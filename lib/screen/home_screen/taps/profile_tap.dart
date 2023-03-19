@@ -159,12 +159,7 @@ class _ProfileState extends State<Profile> {
                     }
                   },
                 ),
-                MaterialButton(
-                  onPressed: () {
-                    _addChatUserDialog();
-                  },
-                  child: const Text('Chat'),
-                ),
+
                 FutureBuilder(
                   future: getPosts(),
                   builder: (context, snapshot) {

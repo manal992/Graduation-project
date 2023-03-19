@@ -13,10 +13,11 @@ import 'package:nicu/screen/home_screen/home.dart';
 import 'package:nicu/screen/hospital_info/hospital_info.dart';
 import 'package:nicu/screen/introduction_animation/introduction_animation_screen.dart';
 import 'package:nicu/screen/map/map.dart';
-import 'package:nicu/screen/nicu_chat/screens/splash_screen.dart';
+
 import 'package:nicu/screen/sign_in/sign_in.dart';
 import 'package:nicu/screen/sign_up/sign_up.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:nicu/screen/splash_screen/splash.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 import 'screen/first_page/first_page.dart';
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           home: FirebaseAuth.instance.currentUser == null
-              ? const Test()
+              ? const SplashScreen()
               : const HomePage(),
           routes: {
             "signIn": (context) => SignIn(),

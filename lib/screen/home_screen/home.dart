@@ -7,7 +7,6 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nicu/screen/home_screen/advice/advice.dart';
 import 'package:nicu/screen/home_screen/taps/home_tap.dart';
-import 'package:nicu/screen/home_screen/taps/notifcation_tap.dart';
 import 'package:nicu/screen/home_screen/taps/notification_page.dart';
 import 'package:nicu/screen/home_screen/taps/profile_tap.dart';
 import 'package:nicu/screen/map/map.dart';

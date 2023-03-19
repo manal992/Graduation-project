@@ -38,54 +38,56 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          title: const Text(
-            "Activity",
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        backgroundColor: Theme.of(context).splashColor,
+        body: Container(
+
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30.0),
+                topRight: Radius.circular(30.0)),
           ),
-          centerTitle: false,
-        ),
-        body: StreamBuilder(
-          stream: FirebaseFirestore.instance
-              .collection('users')
-              .doc(FirebaseAuth.instance.currentUser!.uid)
-              .collection('notification')
-              .snapshots(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                  itemCount:  snapshot.data!.size,
-                  itemBuilder: (context, index) {
-                    return Slidable(
-                      actionPane: const SlidableDrawerActionPane(),
-                      actionExtentRatio: 0.25,
-                      child: notificationItem(snapshot.data?.docs[index]),
-                      secondaryActions: <Widget>[
-                        Container(
-                            height: 60,
-                            color: Colors.grey.shade500,
-                            child: const Icon(
-                              Icons.info_outline,
-                              color: Colors.white,
-                            )),
-                        Container(
-                            height: 60,
-                            color: Colors.red,
-                            child: const Icon(
-                              Icons.delete_outline_sharp,
-                              color: Colors.white,
-                            )),
-                      ],
-                    );
-                  });
-            } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-          },
+          padding: const EdgeInsets.only(top: 20),
+          child: StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection('users')
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .collection('notification')
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                    itemCount:  snapshot.data!.size,
+                    itemBuilder: (context, index) {
+                      return Slidable(
+                        actionPane: const SlidableDrawerActionPane(),
+                        actionExtentRatio: 0.25,
+                        child: notificationItem(snapshot.data?.docs[index]),
+                        secondaryActions: <Widget>[
+                          Container(
+                              height: 60,
+                              color: Colors.grey.shade500,
+                              child: const Icon(
+                                Icons.info_outline,
+                                color: Colors.white,
+                              )),
+                          Container(
+                              height: 60,
+                              color: Colors.red,
+                              child: const Icon(
+                                Icons.delete_outline_sharp,
+                                color: Colors.white,
+                              )),
+                        ],
+                      );
+                    });
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          ),
         ));
   }
 
@@ -144,12 +146,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
               height: 35,
               width: 110,
               decoration: BoxDecoration(
-                color: Colors.blue[700],
+                color: Theme.of(context).secondaryHeaderColor,
                 borderRadius: BorderRadius.circular(5),
               ),
               child: const Center(
                   child:
-                      Text('Follow', style: TextStyle(color: Colors.white)))),
+                      Text('Chat', style: TextStyle(color: Colors.white)))),
         ],
       ),
     );

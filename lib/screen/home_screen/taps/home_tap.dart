@@ -13,8 +13,9 @@ import 'package:nicu/screen/other_profile/other_profile.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../const/color.dart';
-import '../../../we_chat/helper/dialogs.dart';
+import '../../nicu_chat/helper/dialogs.dart';
+
+
 
 class HomeTap extends StatefulWidget {
   const HomeTap({Key? key}) : super(key: key);
@@ -352,7 +353,7 @@ class _HomeTapState extends State<HomeTap> {
   addNotification(
       {String? title, String? body, String? image, String? id}) async {
     String docId = FirebaseFirestore.instance
-        .collection('Post')
+        .collection('users')
         .doc(id)
         .collection('notification')
         .doc()
