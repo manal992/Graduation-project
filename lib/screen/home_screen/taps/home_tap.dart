@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -7,6 +10,8 @@ import 'package:like_button/like_button.dart';
 import 'package:nicu/screen/add_comment/add_comment.dart';
 import 'package:nicu/screen/home_screen/create_post.dart';
 import 'package:nicu/screen/other_profile/other_profile.dart';
+import 'package:overlay_support/overlay_support.dart';
+import 'package:http/http.dart' as http;
 
 import '../../../const/color.dart';
 import '../../../we_chat/helper/dialogs.dart';
@@ -28,7 +33,6 @@ class _HomeTapState extends State<HomeTap> {
   Widget float = Container();
   String? name;
   String? imageProfile;
-
 
   @override
   Widget build(BuildContext context) {
@@ -218,7 +222,13 @@ class _HomeTapState extends State<HomeTap> {
                                   },
                                   onTap: (isLiked) => onLikeButtonTapped(
                                       !isLiked,
-                                      snapshot.data?.docs[index]['docID']),
+                                      snapshot.data?.docs[index]['docID'],
+                                      snapshot.data?.docs[index]['token'],
+                                      snapshot.data?.docs[index]['name'],
+                                      snapshot.data?.docs[index]
+                                          ['imageProfile'],
+                                      snapshot.data?.docs[index]
+                                          ['user']),
                                 ),
                                 Center(
                                   child: Container(
@@ -238,7 +248,8 @@ class _HomeTapState extends State<HomeTap> {
                                         name: name!,
                                         image: imageProfile!));
                                   },
-                                  child: const Icon(Icons.mode_comment_outlined),
+                                  child:
+                                      const Icon(Icons.mode_comment_outlined),
                                 ),
                                 Container(
                                   width: 2,
@@ -276,7 +287,7 @@ class _HomeTapState extends State<HomeTap> {
     );
   }
 
-  addLike(String id, bool val) async {
+  addLike(String id, bool val, String title, body, image, String userID) async {
     String? currentUser = FirebaseAuth.instance.currentUser?.uid;
     await FirebaseFirestore.instance
         .collection('Post')
@@ -292,18 +303,17 @@ class _HomeTapState extends State<HomeTap> {
         SetOptions(merge: true),
       );
     });
+
+    if (val) {
+      addNotification(title: title, body: body, image: image, id: userID);
+    }
   }
 
-  Future<bool> onLikeButtonTapped(bool isLiked, String id) async {
+  Future<bool> onLikeButtonTapped(
+      bool isLiked, String id, String token, String name, image, userID) async {
     print(isLiked);
-    await addLike(id, isLiked);
-
-    /// send your request here
-    // final bool success= await sendRequest();
-
-    /// if failed, you can do nothing
-    // return success? !isLiked:isLiked;
-
+    await addLike(id, isLiked, name, 'add like to your post', image, userID);
+    sendPushMessage(token, 'add like to your post', name);
     return !isLiked;
   }
 
@@ -338,4 +348,63 @@ class _HomeTapState extends State<HomeTap> {
       'date': DateFormat('yyyy-MM-dd').format(DateTime.now()).toString(),
     });
   }
+
+  addNotification(
+      {String? title, String? body, String? image, String? id}) async {
+    String docId = FirebaseFirestore.instance
+        .collection('Post')
+        .doc(id)
+        .collection('notification')
+        .doc()
+        .id;
+    DocumentReference addNotification =
+        FirebaseFirestore.instance.collection('users').doc(id);
+    addNotification.collection('notification').doc(docId).set({
+      'title': title,
+      'body': body,
+      'id': docId,
+      'time': DateFormat('hh:mm a').format(DateTime.now()).toString(),
+      'date': DateFormat('yyyy-MM-dd').format(DateTime.now()).toString(),
+      'image': image
+    });
+  }
+
+  void sendPushMessage(String token, String body, String title) async {
+    try {
+      await http.post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization':
+              'key=AAAAlT9vVzU:APA91bGlVxuzoQ2bSvYe8oBpdNxTc7vbuI19-kyRXNVJuUX74JFmYbF13KhlwuCz7g61jaCTmRvefWijagGo5mK0DJmOJvkt-3N8PURHZP6b8VHnMc9beRAcWpyQlpGUGn-A0SCeBHha',
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'notification': <String, dynamic>{'body': body, 'title': title},
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              'id': '1',
+              'status': 'done'
+            },
+            "to": token,
+          },
+        ),
+      );
+    } catch (e) {
+      print("error push notification");
+    }
+  }
+}
+
+class NotificationModel {
+  String? title;
+
+  String? body;
+
+  String? dateTilte;
+
+  String? dateBody;
+
+  NotificationModel({this.title, this.body, this.dateTilte, this.dateBody});
 }

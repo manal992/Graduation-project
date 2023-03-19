@@ -39,8 +39,7 @@ class _CreatePostState extends State<CreatePost> {
         centerTitle: true,
         leading: InkWell(
           onTap: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => HomeScreen()));
+           Navigator.pop(context);
           },
           child: Icon(
             Icons.arrow_back,

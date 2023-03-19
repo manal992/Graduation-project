@@ -61,7 +61,7 @@ dependencies:
   gallery_saver: ^2.3.2
   like_button: ^2.0.5
 
-
+  shared_preferences:
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -74,6 +74,11 @@ dependencies:
 #  geolocator: ^9.0.2
   connectivity_plus: ^3.0.2
   intl: ^0.17.0
+  google_nav_bar: ^5.0.6
+  overlay_support:
+  flutter_slidable: ^0.6.0
+
+  # For accessing firebase messaging (Push Notification)
 
 dev_dependencies:
   flutter_test:
@@ -104,6 +109,7 @@ flutter:
     - asset/lottiefiles/
     - asset/lang/
     - asset/dataCenters/
+    - asset/notifications.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

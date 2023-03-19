@@ -17,6 +17,7 @@ import 'package:nicu/screen/nicu_chat/screens/splash_screen.dart';
 import 'package:nicu/screen/sign_in/sign_in.dart';
 import 'package:nicu/screen/sign_up/sign_up.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 import 'screen/first_page/first_page.dart';
 
@@ -34,28 +35,30 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => ProviderController(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: FirebaseAuth.instance.currentUser == null
-            ? const Test()
-            : const HomePage(),
-        routes: {
-          "signIn": (context) => SignIn(),
-          "signUp": (context) => SignUp(),
-          "firstPage": (context) => FirstPage()
-        },
-        themeMode: ThemeMode.light,
-        theme: ThemeData(
-          brightness: Brightness.light,
-          primaryColor: HexColor.fromHex("#5F7EAA"),
-          secondaryHeaderColor: HexColor.fromHex("#1C3879"),
-          splashColor: HexColor.fromHex("#EAE3D1"),
-          backgroundColor: Colors.white,
-        ),
-        darkTheme: ThemeData(
-          brightness: Brightness.dark,
-          primaryColor: Colors.white,
-          backgroundColor: Colors.white,
+      child: OverlaySupport(
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: FirebaseAuth.instance.currentUser == null
+              ? const Test()
+              : const HomePage(),
+          routes: {
+            "signIn": (context) => SignIn(),
+            "signUp": (context) => SignUp(),
+            "firstPage": (context) => FirstPage()
+          },
+          themeMode: ThemeMode.light,
+          theme: ThemeData(
+            brightness: Brightness.light,
+            primaryColor: HexColor.fromHex("#5F7EAA"),
+            secondaryHeaderColor: HexColor.fromHex("#1C3879"),
+            splashColor: HexColor.fromHex("#EAE3D1"),
+            backgroundColor: Colors.white,
+          ),
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+            primaryColor: Colors.white,
+            backgroundColor: Colors.white,
+          ),
         ),
       ),
     );
