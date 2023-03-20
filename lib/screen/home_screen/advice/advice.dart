@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nicu/screen/home_screen/first.dart';
+
 
 class Advice extends StatefulWidget {
   const Advice({Key? key}) : super(key: key);
@@ -37,17 +37,17 @@ class _AdviceState extends State<Advice> {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         decoration: const BoxDecoration(
           color: Colors.white,
           image: DecorationImage(
-              image: AssetImage('asset/Images/b.svg'), opacity: 0.3),
+              image: AssetImage('asset/Images/b.png'), opacity: 0.3),
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
         ),
         child: ListView.builder(
           itemBuilder: (context, index) => Container(
-            padding: EdgeInsets.all(14),
+            padding: const EdgeInsets.all(14),
             child: Row(
               children: [
                 CircleAvatar(
@@ -58,7 +58,7 @@ class _AdviceState extends State<Advice> {
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 16,
                 ),
                 Flexible(

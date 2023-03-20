@@ -99,189 +99,191 @@ class _MapPageState extends State<MapPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     var x = Provider.of<ProviderController>(context);
-    return Scaffold(
-      body: Stack(
-        children: [
-          FutureBuilder(
-              future: x.getMarkers1(typeHospital),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  List data = snapshot.data as List;
-                  return FlutterMap(
-                    key: ValueKey(MediaQuery.of(context).orientation),
-                    options: MapOptions(
-                      controller: mapController,
-                      onMapCreated: (c) {
-                        mapController = c;
-                      },
-                      maxZoom: 22,
-                      minZoom: 3,
-                      zoom: 8,
-                      onPositionChanged: (center, val) {},
-                      plugins: [
-                        MarkerClusterPlugin(),
-                        const LocationMarkerPlugin(),
-                      ],
-                      center: LatLng(x.lat!, x.long!),
-                      // center: LatLng(30.635478259074432, 31.0902948107),
-                      // interactiveFlags: InteractiveFlag.drag |
-                      //     InteractiveFlag.pinchMove |
-                      //     InteractiveFlag.pinchZoom
-                    ),
-                    layers: [
-                      TileLayerOptions(
-                        urlTemplate:
-                            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                        subdomains: ['a', 'b', 'c'],
+    return  SafeArea(
+      child: Scaffold(
+        body: Stack(
+          children: [
+            FutureBuilder(
+                future: x.getMarkers1(typeHospital),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List data = snapshot.data as List;
+                    return FlutterMap(
+                      key: ValueKey(MediaQuery.of(context).orientation),
+                      options: MapOptions(
+                        controller: mapController,
+                        onMapCreated: (c) {
+                          mapController = c;
+                        },
+                        maxZoom: 22,
+                        minZoom: 3,
+                        zoom: 8,
+                        onPositionChanged: (center, val) {},
+                        plugins: [
+                          MarkerClusterPlugin(),
+                          const LocationMarkerPlugin(),
+                        ],
+                        center: LatLng(x.lat!, x.long!),
+                        // center: LatLng(30.635478259074432, 31.0902948107),
+                        // interactiveFlags: InteractiveFlag.drag |
+                        //     InteractiveFlag.pinchMove |
+                        //     InteractiveFlag.pinchZoom
                       ),
-                      MarkerLayerOptions(markers: [
-                        ...data.map((e) => Marker(
-                            width: 50,
-                            height: 50,
-                            point: LatLng(double.parse('${e['late']}'),
-                                double.parse('${e['long']}')),
-                            builder: (BuildContext context) => InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                HospitalInfo(uid: e['uid'])));
-                                  },
-                                  child: Stack(
+                      layers: [
+                        TileLayerOptions(
+                          urlTemplate:
+                              "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                          subdomains: ['a', 'b', 'c'],
+                        ),
+                        MarkerLayerOptions(markers: [
+                          ...data.map((e) => Marker(
+                              width: 50,
+                              height: 50,
+                              point: LatLng(double.parse('${e['late']}'),
+                                  double.parse('${e['long']}')),
+                              builder: (BuildContext context) => InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  HospitalInfo(uid: e['uid'])));
+                                    },
+                                    child: Stack(
+                                      children: [
+                                        CustomPaint(
+                                          size: const Size(180, 110),
+                                          painter: RPSCustomPainter(
+                                              color:
+                                                  HexColor.fromHex(e['color'])),
+                                        ),
+                                        const Positioned(
+                                          right: 11,
+                                          top: 5,
+                                          child: Icon(
+                                            Icons.local_hospital,
+                                            color: Colors.white,
+                                            size: 27.0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ))),
+                          Marker(
+                            width: 100,
+                            height: 100,
+                            point: LatLng(x.lat!, x.long!),
+                            builder: (ctx) => AnimatedBuilder(
+                                animation: CurvedAnimation(
+                                    parent: _controller,
+                                    curve: Curves.fastOutSlowIn),
+                                builder: (context, child) {
+                                  return Stack(
                                     children: [
-                                      CustomPaint(
-                                        size: const Size(180, 110),
-                                        painter: RPSCustomPainter(
-                                            color:
-                                                HexColor.fromHex(e['color'])),
-                                      ),
-                                      const Positioned(
-                                        right: 11,
-                                        top: 5,
-                                        child: Icon(
-                                          Icons.local_hospital,
-                                          color: Colors.white,
-                                          size: 27.0,
+                                      Center(
+                                        child: Container(
+                                          width: 20,
+                                          height: 20,
+                                          decoration: BoxDecoration(
+                                              color: Colors.green.withOpacity(1),
+                                              shape: BoxShape.circle),
                                         ),
                                       ),
+                                      lo.Lottie.network(
+                                          'https://assets4.lottiefiles.com/packages/lf20_bgmlsv9w.json')
                                     ],
-                                  ),
-                                ))),
-                        Marker(
-                          width: 100,
-                          height: 100,
-                          point: LatLng(x.lat!, x.long!),
-                          builder: (ctx) => AnimatedBuilder(
-                              animation: CurvedAnimation(
-                                  parent: _controller,
-                                  curve: Curves.fastOutSlowIn),
-                              builder: (context, child) {
-                                return Stack(
-                                  children: [
-                                    Center(
-                                      child: Container(
-                                        width: 20,
-                                        height: 20,
-                                        decoration: BoxDecoration(
-                                            color: Colors.green.withOpacity(1),
-                                            shape: BoxShape.circle),
-                                      ),
-                                    ),
-                                    lo.Lottie.network(
-                                        'https://assets4.lottiefiles.com/packages/lf20_bgmlsv9w.json')
-                                  ],
-                                );
-                              }),
-                        ),
-                      ]),
-                    ],
-                  );
-                } else {
-                  return const CircularProgressIndicator();
-                }
-              }),
-          Container(
-            height: 240,
-            decoration: const BoxDecoration(color: Colors.transparent),
-            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 80,
-                ),
-                Container(
-                    height: 60,
-                    margin: const EdgeInsets.only(left: 15),
-                    child: ListView.separated(
-                      shrinkWrap: true,
-                      separatorBuilder: (context, index) => const SizedBox(
-                        width: 15,
-                      ),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: type.length,
-                      itemBuilder: (context, index) => ElevatedButton.icon(
-                        onPressed: () {
-                          setState(() {
-                            typeIndex = index;
-                            typeHospital = type1[index];
-                          });
-                        },
-                        icon: Icon(
-                          Icons.local_hospital,
-                          color: Colors.white,
-                          size: 27.0,
-                        ),
-                        label: Text(
-                          type[index],
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 15),
-                        ),
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                                typeIndex == index
-                                    ? Colors.teal.shade400.withOpacity(0.5)
-                                    : Colors.white10),
-                            shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                    side: const BorderSide(
-                                        color: Colors.black)))),
-                      ),
-                    )),
-                const SizedBox(
-                  height: 20,
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-              bottom: 40,
-              right: 15,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                color: Colors.white,
-                elevation: 2,
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.my_location,
-                    size: 26,
-                    color: Colors.blue,
+                                  );
+                                }),
+                          ),
+                        ]),
+                      ],
+                    );
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
+                }),
+            Container(
+              height: 240,
+              decoration: const BoxDecoration(color: Colors.transparent),
+              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 80,
                   ),
-                  onPressed: () {
-                    // x.endValue(true);
-                    x.getCurrentLocation().whenComplete(() {
-                      _animatedMapMove(LatLng(x.lat!, x.long!), 13);
-                      // mapController.move(LatLng(x.lat!, x.long!), 13);
-                    });
-                    // mapController.move(LatLng(lat, long), 13);
-                  },
-                ),
-              ))
-        ],
+                  Container(
+                      height: 60,
+                      margin: const EdgeInsets.only(left: 15),
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        separatorBuilder: (context, index) => const SizedBox(
+                          width: 15,
+                        ),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: type.length,
+                        itemBuilder: (context, index) => ElevatedButton.icon(
+                          onPressed: () {
+                            setState(() {
+                              typeIndex = index;
+                              typeHospital = type1[index];
+                            });
+                          },
+                          icon: Icon(
+                            Icons.local_hospital,
+                            color: Colors.white,
+                            size: 27.0,
+                          ),
+                          label: Text(
+                            type[index],
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 15),
+                          ),
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  typeIndex == index
+                                      ? Colors.teal.shade400.withOpacity(0.5)
+                                      : Colors.white10),
+                              shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                      side: const BorderSide(
+                                          color: Colors.black)))),
+                        ),
+                      )),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+                bottom: 40,
+                right: 15,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  color: Colors.white,
+                  elevation: 2,
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.my_location,
+                      size: 26,
+                      color: Colors.blue,
+                    ),
+                    onPressed: () {
+                      // x.endValue(true);
+                      x.getCurrentLocation().whenComplete(() {
+                        _animatedMapMove(LatLng(x.lat!, x.long!), 13);
+                        // mapController.move(LatLng(x.lat!, x.long!), 13);
+                      });
+                      // mapController.move(LatLng(lat, long), 13);
+                    },
+                  ),
+                ))
+          ],
+        ),
       ),
     );
   }

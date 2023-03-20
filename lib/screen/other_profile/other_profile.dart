@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nicu/screen/nicu_chat/api/apis.dart';
 import 'package:nicu/screen/nicu_chat/screens/home_screen.dart';
 
-import '../../we_chat/api/apis.dart';
-import '../../we_chat/helper/dialogs.dart';
+import '../nicu_chat/helper/dialogs.dart';
+
+
 
 class OtherProfile extends StatefulWidget {
   OtherProfile({Key? key, required this.uid}) : super(key: key);
