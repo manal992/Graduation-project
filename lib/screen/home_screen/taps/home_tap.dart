@@ -227,8 +227,7 @@ class _HomeTapState extends State<HomeTap> {
                                       snapshot.data?.docs[index]['name'],
                                       snapshot.data?.docs[index]
                                           ['imageProfile'],
-                                      snapshot.data?.docs[index]
-                                          ['user']),
+                                      snapshot.data?.docs[index]['user']),
                                 ),
                                 Center(
                                   child: Container(
@@ -287,7 +286,8 @@ class _HomeTapState extends State<HomeTap> {
     );
   }
 
-  addLike(String id, bool val, String title, body, image, String userID) async {
+  addLike(String id, bool val, String title, body, image, String userID,
+      String token) async {
     String? currentUser = FirebaseAuth.instance.currentUser?.uid;
     await FirebaseFirestore.instance
         .collection('Post')
@@ -305,15 +305,27 @@ class _HomeTapState extends State<HomeTap> {
     });
 
     if (val) {
-      addNotification(title: title, body: body, image: image, id: userID);
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser)
+          .get()
+          .then((value) {
+        sendPushMessage(token,'  add like to your post', value['name']);
+        addNotification(
+            title: value['name'],
+            body: body,
+            image: value['image'],
+            id: userID);
+      });
     }
   }
 
   Future<bool> onLikeButtonTapped(
       bool isLiked, String id, String token, String name, image, userID) async {
     print(isLiked);
-    await addLike(id, isLiked, name, 'add like to your post', image, userID);
-    sendPushMessage(token, 'add like to your post', name);
+    await addLike(
+        id, isLiked, name, '  add like to your post', image, userID, token);
+
     return !isLiked;
   }
 

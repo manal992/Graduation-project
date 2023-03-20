@@ -56,7 +56,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
-                  itemCount:  snapshot.data!.size,
+                  itemCount: snapshot.data!.size,
                   itemBuilder: (context, index) {
                     return Slidable(
                       actionPane: const SlidableDrawerActionPane(),
@@ -70,13 +70,23 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               Icons.info_outline,
                               color: Colors.white,
                             )),
-                        Container(
-                            height: 60,
-                            color: Colors.red,
-                            child: const Icon(
-                              Icons.delete_outline_sharp,
-                              color: Colors.white,
-                            )),
+                        InkWell(
+                          onTap: () {
+                            FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(FirebaseAuth.instance.currentUser!.uid)
+                                .collection('notification')
+                                .doc(snapshot.data?.docs[index]['id'])
+                                .delete();
+                          },
+                          child: Container(
+                              height: 60,
+                              color: Colors.red,
+                              child: const Icon(
+                                Icons.delete_outline_sharp,
+                                color: Colors.white,
+                              )),
+                        ),
                       ],
                     );
                   });

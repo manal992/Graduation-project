@@ -19,7 +19,7 @@ class _ForgetBasswordState extends State<ForgetBassword> {
           children: [
             Container(
               alignment: Alignment.topCenter,
-              padding: EdgeInsets.only(top: 45),
+              padding: const EdgeInsets.only(top: 45),
               height: double.infinity,
               width: double.infinity,
               decoration:
@@ -31,11 +31,11 @@ class _ForgetBasswordState extends State<ForgetBassword> {
               ),
             ),
             Container(
-                margin: EdgeInsets.only(top: 260),
+                margin: const EdgeInsets.only(top: 260),
                 height: double.infinity,
                 width: double.infinity,
                 alignment: Alignment.center,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(topLeft: Radius.circular(120))),
 
@@ -43,7 +43,7 @@ class _ForgetBasswordState extends State<ForgetBassword> {
 
                 child: SingleChildScrollView(
                   child: Container(
-                    padding: EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
                     child: Form(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -55,14 +55,14 @@ class _ForgetBasswordState extends State<ForgetBassword> {
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).secondaryHeaderColor),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 60,
                           ),
                           TextFormField(
                             decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.phone),
+                              prefixIcon: const Icon(Icons.phone),
                               hintText: "Phone Number",
-                              hintStyle: TextStyle(
+                              hintStyle: const TextStyle(
                                 fontSize: 18,
                               ),
                               border: OutlineInputBorder(
@@ -74,12 +74,12 @@ class _ForgetBasswordState extends State<ForgetBassword> {
                             ),
                             keyboardType: TextInputType.phone,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                            Text('We will send the password through the phone number '
                              ,style: TextStyle(color: Theme.of(context).secondaryHeaderColor),),
-                          SizedBox(
+                          const SizedBox(
                             height: 40,
                           ),
                           DefaultButton(
@@ -89,7 +89,7 @@ class _ForgetBasswordState extends State<ForgetBassword> {
                             Theme.of(context).secondaryHeaderColor,
                             function: () { },
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           InkWell(
@@ -103,7 +103,7 @@ class _ForgetBasswordState extends State<ForgetBassword> {
                                 Icon(Icons.arrow_back ,
                                   color:Theme.of(context).secondaryHeaderColor ,
                                 ),
-                                SizedBox(width: 2,),
+                                const SizedBox(width: 2,),
                                 Text('Back to login' ,style:TextStyle(color:Theme.of(context).secondaryHeaderColor
                                     ,fontSize: 17 ,
                                   fontWeight: FontWeight.bold
