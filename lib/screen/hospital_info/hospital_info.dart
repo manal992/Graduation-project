@@ -101,7 +101,7 @@ class _HospitalInfoState extends State<HospitalInfo> {
                                             launchUrl(Uri.parse(
                                                 'tel:/${data['phone']}'));
                                           },
-                                          child: Icon(
+                                          child: const Icon(
                                             Icons.call,
                                             color: Colors.green,
                                             size: 30,

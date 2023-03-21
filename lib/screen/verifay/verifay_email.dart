@@ -43,27 +43,38 @@ class _Verifying_EmailState extends State<Verifying_Email> {
         width: double.infinity,
         decoration:  const BoxDecoration(
           image: DecorationImage(
-            image:AssetImage("asset/Images/user.png"),
-            fit: BoxFit.cover,
+              opacity :0.5,
+
+            image:AssetImage("asset/Images/b.png"),
+            fit: BoxFit.none,
           ),
         ),
         child: Center(child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const CircleAvatar(
-              backgroundColor: Colors.red,
-              radius: 70,
-              child: Icon(Icons.verified_outlined, size: 79),),
-            const SizedBox(height: 30,),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Text('We Send Verification Link To ${user?.email}',
-                style: GoogleFonts.vesperLibre(
-                    color: Colors.white,
-                    fontSize: 28,
-                    fontWeight: FontWeight.w600
-                ),),
-            ),
+             CircleAvatar(
+              backgroundColor: Theme.of(context).secondaryHeaderColor,
+              radius: 60,
+              child: const Icon(Icons.verified_outlined, size: 79),),
+            const SizedBox(height: 40,),
+             Padding(
+               padding: const EdgeInsets.all(12.0),
+               child: Row(
+                 mainAxisAlignment: MainAxisAlignment.center,
+                 crossAxisAlignment: CrossAxisAlignment.center,
+                 children: [
+                   Text('We Send Verification Link To \n ${user?.email}',
+                     textAlign: TextAlign.center,
+                     style: GoogleFonts.vesperLibre(
+                         color: Theme.of(context).secondaryHeaderColor,
+                         fontSize: 24,
+                         fontWeight: FontWeight.w600,
+
+
+                     ),),
+                 ],
+               ),
+             ),
             const SizedBox(height: 30,),
             ElevatedButton(
                 onPressed: () async {
@@ -79,7 +90,7 @@ class _Verifying_EmailState extends State<Verifying_Email> {
                       GoogleFonts.acme(fontSize: 17)),
                   padding: MaterialStateProperty.all(
                     EdgeInsets.symmetric(
-                        vertical: 12,
+                        vertical: 16,
                         horizontal:
                         MediaQuery
                             .of(context)
@@ -89,7 +100,7 @@ class _Verifying_EmailState extends State<Verifying_Email> {
                     RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50),
                         side: BorderSide(
-                            color: ColorManager.primary, width: 1.5)),
+                            color: Theme.of(context).secondaryHeaderColor, width:2)),
                   ),
                   elevation: MaterialStateProperty.all(3),
                 ),
@@ -97,7 +108,7 @@ class _Verifying_EmailState extends State<Verifying_Email> {
                   'Check Your Email' ,
                   style: GoogleFonts.archivo(
                       color:Theme.of(context).secondaryHeaderColor ,
-                      fontSize: 22,
+                      fontSize: 20,
                       fontWeight: FontWeight.w900
                   ),
                 )),

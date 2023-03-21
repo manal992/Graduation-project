@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
       switch (drawerIndex) {
         case DrawerIndex.HOME:
           setState(() {
-            screenView =  HomeScreen();
+            screenView =  const HomeScreen();
           });
           break;
         case DrawerIndex.Help:
