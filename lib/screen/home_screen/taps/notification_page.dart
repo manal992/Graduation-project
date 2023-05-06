@@ -6,6 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
+import '../../nicu_chat/api/apis.dart';
+import '../../nicu_chat/helper/dialogs.dart';
+import '../../nicu_chat/screens/home_screen.dart';
+
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({Key? key}) : super(key: key);
 
@@ -55,8 +59,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
           decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
-
+                topLeft: Radius.circular(30.0),
+                topRight: Radius.circular(30.0)),
           ),
           child: StreamBuilder(
             stream: FirebaseFirestore.instance
@@ -162,16 +166,27 @@ class _NotificationScreenState extends State<NotificationScreen> {
               ],
             ),
           ),
-          Container(
-              height: 35,
-              width: 110,
-              decoration: BoxDecoration(
-                color:  Theme.of(context).secondaryHeaderColor,
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: const Center(
-                  child:
-                      Text('Chat', style: TextStyle(color: Colors.white)))),
+          InkWell(
+            onTap: () async {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const HomeChat()));
+              await APIs.addChatUser(data['email']).then((value) {
+                if (!value) {
+                  Dialogs.showSnackbar(context, 'User does not Exists!');
+                }
+              });
+            },
+            child: Container(
+                height: 35,
+                width: 110,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).secondaryHeaderColor,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: const Center(
+                    child:
+                        Text('Chat', style: TextStyle(color: Colors.white)))),
+          ),
         ],
       ),
     );

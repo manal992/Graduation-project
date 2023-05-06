@@ -29,11 +29,7 @@ class MyApp extends StatelessWidget {
       child: OverlaySupport(
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: FirebaseAuth.instance.currentUser == null
-              ? const SplashScreen()
-              : const HomePage(),
-
-
+          home: const SplashScreen(),
           routes: {
             "signIn": (context) => SignIn(),
             "signUp": (context) => SignUp(),

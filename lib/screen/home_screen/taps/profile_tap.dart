@@ -159,7 +159,6 @@ class _ProfileState extends State<Profile> {
                     }
                   },
                 ),
-
                 FutureBuilder(
                   future: getPosts(),
                   builder: (context, snapshot) {
@@ -189,10 +188,15 @@ class _ProfileState extends State<Profile> {
                               children: [
                                 Row(
                                   children: [
-                                    const CircleAvatar(
-                                      backgroundImage: NetworkImage(
-                                          'https://cdn.pixabay.com/photo/2019/05/04/15/24/woman-4178302_960_720.jpg'),
-                                    ),
+                                    data[index]['imageProfile'] != 'null'
+                                        ? CircleAvatar(
+                                            backgroundImage: NetworkImage(
+                                                data[index]['imageProfile']),
+                                          )
+                                        : const CircleAvatar(
+                                            backgroundImage: NetworkImage(
+                                                'https://cdn.pixabay.com/photo/2019/05/04/15/24/woman-4178302_960_720.jpg'),
+                                          ),
                                     const SizedBox(
                                       width: 10,
                                     ),
@@ -235,45 +239,45 @@ class _ProfileState extends State<Profile> {
                                 const SizedBox(
                                   height: 15,
                                 ),
-                                const Divider(
-                                  color: Colors.grey,
-                                  thickness: 1,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: const [
-                                        Icon(Icons.favorite_border_outlined),
-                                        Text('50'),
-                                      ],
-                                    ),
-                                    Center(
-                                      child: Container(
-                                        width: 2,
-                                        height: 25,
-                                        decoration: const BoxDecoration(
-                                            color: Colors.grey),
-                                      ),
-                                    ),
-                                    Row(
-                                      children: const [
-                                        Icon(Icons.mode_comment_outlined),
-                                        Text('7'),
-                                      ],
-                                    ),
-                                    Center(
-                                      child: Container(
-                                        width: 2,
-                                        height: 25,
-                                        decoration: const BoxDecoration(
-                                            color: Colors.grey),
-                                      ),
-                                    ),
-                                    const Icon(Icons.save),
-                                  ],
-                                )
+                                // const Divider(
+                                //   color: Colors.grey,
+                                //   thickness: 1,
+                                // ),
+                                // Row(
+                                //   mainAxisAlignment:
+                                //       MainAxisAlignment.spaceBetween,
+                                //   children: [
+                                //     Row(
+                                //       children: const [
+                                //         Icon(Icons.favorite_border_outlined),
+                                //         Text('50'),
+                                //       ],
+                                //     ),
+                                //     Center(
+                                //       child: Container(
+                                //         width: 2,
+                                //         height: 25,
+                                //         decoration: const BoxDecoration(
+                                //             color: Colors.grey),
+                                //       ),
+                                //     ),
+                                //     Row(
+                                //       children: const [
+                                //         Icon(Icons.mode_comment_outlined),
+                                //         Text('7'),
+                                //       ],
+                                //     ),
+                                //     Center(
+                                //       child: Container(
+                                //         width: 2,
+                                //         height: 25,
+                                //         decoration: const BoxDecoration(
+                                //             color: Colors.grey),
+                                //       ),
+                                //     ),
+                                //     const Icon(Icons.save),
+                                //   ],
+                                // )
                               ],
                             ),
                           ),

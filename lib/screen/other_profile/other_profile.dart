@@ -29,10 +29,13 @@ class _OtherProfileState extends State<OtherProfile> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).splashColor,
         elevation: 0,
-        title: const Text(
-          '',
-          style: TextStyle(color: Colors.black),
+        centerTitle: true,
+        title:   Text(
+          'Profile',
+          style: TextStyle(color:Theme.of(context).secondaryHeaderColor ,fontSize:24 ,fontWeight: FontWeight.bold),
         ),
+        leading:    InkWell(child: Icon(Icons.arrow_back ,color:Theme.of(context).secondaryHeaderColor ) ,
+        onTap: (){},),
       ),
       body: Container(
         height: double.infinity,
@@ -253,41 +256,41 @@ class _OtherProfileState extends State<OtherProfile> {
                                 color: Colors.grey,
                                 thickness: 1,
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: const [
-                                      Icon(Icons.favorite_border_outlined),
-                                      Text('50'),
-                                    ],
-                                  ),
-                                  Center(
-                                    child: Container(
-                                      width: 2,
-                                      height: 25,
-                                      decoration: const BoxDecoration(
-                                          color: Colors.grey),
-                                    ),
-                                  ),
-                                  Row(
-                                    children: const [
-                                      Icon(Icons.mode_comment_outlined),
-                                      Text('7'),
-                                    ],
-                                  ),
-                                  Center(
-                                    child: Container(
-                                      width: 2,
-                                      height: 25,
-                                      decoration: const BoxDecoration(
-                                          color: Colors.grey),
-                                    ),
-                                  ),
-                                  const Icon(Icons.save),
-                                ],
-                              )
+                              // Row(
+                              //   mainAxisAlignment:
+                              //       MainAxisAlignment.spaceBetween,
+                              //   children: [
+                              //     Row(
+                              //       children: const [
+                              //         Icon(Icons.favorite_border_outlined),
+                              //         Text('50'),
+                              //       ],
+                              //     ),
+                              //     Center(
+                              //       child: Container(
+                              //         width: 2,
+                              //         height: 25,
+                              //         decoration: const BoxDecoration(
+                              //             color: Colors.grey),
+                              //       ),
+                              //     ),
+                              //     Row(
+                              //       children: const [
+                              //         Icon(Icons.mode_comment_outlined),
+                              //         Text('7'),
+                              //       ],
+                              //     ),
+                              //     Center(
+                              //       child: Container(
+                              //         width: 2,
+                              //         height: 25,
+                              //         decoration: const BoxDecoration(
+                              //             color: Colors.grey),
+                              //       ),
+                              //     ),
+                              //     const Icon(Icons.save),
+                              //   ],
+                              // )
                             ],
                           ),
                         ),

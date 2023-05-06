@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../home_screen/first.dart';
 import '../introduction_animation/introduction_animation_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -24,10 +26,13 @@ class _SplashScreenState extends State<SplashScreen> {
       });
       if (_second == 0) {
         _cancelFlashsaleTimer();
-        Navigator.of(context).pushAndRemoveUntil(
+        FirebaseAuth.instance.currentUser == null?  Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
                 builder: (context) => const IntroductionAnimationScreen()),
-            (Route<dynamic> route) => false);
+            (Route<dynamic> route) => false): Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (context) => const HomePage()),
+                (Route<dynamic> route) => false);
       }
     });
   }

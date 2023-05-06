@@ -15,8 +15,6 @@ import 'package:http/http.dart' as http;
 
 import '../../nicu_chat/helper/dialogs.dart';
 
-
-
 class HomeTap extends StatefulWidget {
   const HomeTap({Key? key}) : super(key: key);
 
@@ -246,7 +244,9 @@ class _HomeTapState extends State<HomeTap> {
                                             'Just some dummy description text',
                                         id: snapshot.data?.docs[index]['docID'],
                                         name: name!,
-                                        image: imageProfile!));
+                                        image: imageProfile!,
+                                        token: snapshot.data?.docs[index]
+                                            ['token']));
                                   },
                                   child:
                                       const Icon(Icons.mode_comment_outlined),
@@ -311,7 +311,7 @@ class _HomeTapState extends State<HomeTap> {
           .doc(currentUser)
           .get()
           .then((value) {
-        sendPushMessage(token,'  add like to your post', value['name']);
+        sendPushMessage(token, '  add like to your post', value['name']);
         addNotification(
             title: value['name'],
             body: body,
@@ -378,7 +378,8 @@ class _HomeTapState extends State<HomeTap> {
       'id': docId,
       'time': DateFormat('hh:mm a').format(DateTime.now()).toString(),
       'date': DateFormat('yyyy-MM-dd').format(DateTime.now()).toString(),
-      'image': image
+      'image': image,
+      'email': FirebaseAuth.instance.currentUser!.email,
     });
   }
 

@@ -74,7 +74,7 @@ class _HomeChatState extends State<HomeChat> {
           }
         },
         child: Scaffold(
-          //app bar
+
           appBar: AppBar(
             leading: const Icon(CupertinoIcons.home),
             title: _isSearching
@@ -125,14 +125,14 @@ class _HomeChatState extends State<HomeChat> {
           ),
 
           //floating button to add new user
-          floatingActionButton: Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: FloatingActionButton(
-                onPressed: () {
-                  _addChatUserDialog();
-                },
-                child: const Icon(Icons.add_comment_rounded)),
-          ),
+          // floatingActionButton: Padding(
+          //   padding: const EdgeInsets.only(bottom: 10),
+          //   child: FloatingActionButton(
+          //       onPressed: () {
+          //         _addChatUserDialog();
+          //       },
+          //       child: const Icon(Icons.add_comment_rounded)),
+          // ),
 
           //body
           body: StreamBuilder(

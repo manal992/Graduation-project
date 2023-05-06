@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 import '../../const/color.dart';
 
@@ -13,6 +16,7 @@ class AddComment extends ModalRoute {
   final String name;
   final String image;
   final String id;
+  final String token;
 
   // constructor
   AddComment({
@@ -21,6 +25,7 @@ class AddComment extends ModalRoute {
     required this.name,
     required this.image,
     required this.description,
+    required this.token,
   });
 
   @override
@@ -152,6 +157,27 @@ class AddComment extends ModalRoute {
     );
   }
 
+  addNotification(
+      {String? title, String? body, String? image, String? id}) async {
+    String docId = FirebaseFirestore.instance
+        .collection('users')
+        .doc(id)
+        .collection('notification')
+        .doc()
+        .id;
+    DocumentReference addNotification =
+        FirebaseFirestore.instance.collection('users').doc(id);
+    addNotification.collection('notification').doc(docId).set({
+      'title': title,
+      'body': body,
+      'id': docId,
+      'time': DateFormat('hh:mm a').format(DateTime.now()).toString(),
+      'date': DateFormat('yyyy-MM-dd').format(DateTime.now()).toString(),
+      'image': image,
+      'email': FirebaseAuth.instance.currentUser!.email,
+    });
+  }
+
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation, Widget child) {
@@ -177,6 +203,18 @@ class AddComment extends ModalRoute {
     var currentUser = FirebaseAuth.instance.currentUser?.uid;
     DocumentReference addPost =
         FirebaseFirestore.instance.collection('Post').doc(id);
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser)
+        .get()
+        .then((value) {
+      sendPushMessage(token, '  add Comment to your post', value['name']);
+      addNotification(
+          title: value['name'],
+          body: ' add Comment to your post',
+          image: value['image'],
+          id: currentUser);
+    });
     addPost.collection('comments').add({
       'name': name,
       'image': image,
@@ -185,6 +223,33 @@ class AddComment extends ModalRoute {
       'time': DateFormat('hh:mm a').format(DateTime.now()).toString(),
       'date': DateFormat('yyyy-MM-dd').format(DateTime.now()).toString(),
     });
+  }
+
+  void sendPushMessage(String token, String body, String title) async {
+    try {
+      await http.post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization':
+              'key=AAAAlT9vVzU:APA91bGlVxuzoQ2bSvYe8oBpdNxTc7vbuI19-kyRXNVJuUX74JFmYbF13KhlwuCz7g61jaCTmRvefWijagGo5mK0DJmOJvkt-3N8PURHZP6b8VHnMc9beRAcWpyQlpGUGn-A0SCeBHha',
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'notification': <String, dynamic>{'body': body, 'title': title},
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              'id': '1',
+              'status': 'done'
+            },
+            "to": token,
+          },
+        ),
+      );
+    } catch (e) {
+      print("error push notification");
+    }
   }
 
   Widget setupAlertDialogContainer(context, CollectionReference ss) {
