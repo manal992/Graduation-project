@@ -10,10 +10,103 @@ class Doctors extends StatefulWidget {
 }
 
 class _DoctorsState extends State<Doctors> {
+  List doctor=[
+    {
+      "name":"Nader Nasr ",
+      "image":"https://www.google.com.eg/url?sa=i&url=https%3A%2F%2Fwww.menshealth.com%2Fhealth%2Fa40971698%2F5-questions-your-doctor-wishes-youd-ask%2F&psig=AOvVaw3uFm6f569sSVx21DkTtZZC&ust=1684768276229000&source=images&cd=vfe&ved=0CA4QjRxqFwoTCOibkIvZhv8CFQAAAAAdAAAAABAD",
+      "address":"مدينة كفر الزيات، مركز كفر الزيات، الغربية 6615132  ",
+    },
+
+    {
+      "name":"hazem helal ",
+      "image":"مدينة كفر الزيات، مركز كفر الزيات، الغربhttps://www.google.com.eg/url?sa=i&url=https%3A%2F%2Fwww.eatthis.com%2Fnews-doctors-beg-you-never-do-these-things%2F&psig=AOvVaw3uFm6f569sSVx21DkTtZZC&ust=1684768276229000&source=images&cd=vfe&ved=0CA4QjRxqFwoTCOibkIvZhv8CFQAAAAAdAAAAABAM     ية 6615132",
+      "address":"RRF7+RP9، كفر الزيات، مدينة كفر الزيات، كفر الزيات،، مركز كفر الزيات، الغربية ",
+    },
+    {
+      "name":"Nader Nasr ",
+      "image":"https://www.google.com.eg/url?sa=i&url=https%3A%2F%2Fwww.menshealth.com%2Fhealth%2Fa40971698%2F5-questions-your-doctor-wishes-youd-ask%2F&psig=AOvVaw3uFm6f569sSVx21DkTtZZC&ust=1684768276229000&source=images&cd=vfe&ved=0CA4QjRxqFwoTCOibkIvZhv8CFQAAAAAdAAAAABAD",
+      "address":"مدينة كفر الزيات، مركز كفر الزيات، الغربية  ",
+    },
+    {
+      "name":"Nader Nasr ",
+      "image":"https://www.google.com.eg/url?sa=i&url=https%3A%2F%2Fwww.menshealth.com%2Fhealth%2Fa40971698%2F5-questions-your-doctor-wishes-youd-ask%2F&psig=AOvVaw3uFm6f569sSVx21DkTtZZC&ust=1684768276229000&source=images&cd=vfe&ved=0CA4QjRxqFwoTCOibkIvZhv8CFQAAAAAdAAAAABAD",
+      "address":"مدينة كفر الزيات، مركز كفر الزيات، الغربية  ",
+    },
+    {
+      "name":"Nader Nasr ",
+      "image":"https://www.google.com.eg/url?sa=i&url=https%3A%2F%2Fwww.menshealth.com%2Fhealth%2Fa40971698%2F5-questions-your-doctor-wishes-youd-ask%2F&psig=AOvVaw3uFm6f569sSVx21DkTtZZC&ust=1684768276229000&source=images&cd=vfe&ved=0CA4QjRxqFwoTCOibkIvZhv8CFQAAAAAdAAAAABAD",
+      "address":"مدينة كفر الزيات، مركز كفر الزيات، الغربية  ",
+    },
+    {
+      "name":"Nader Nasr ",
+      "image":"https://www.google.com.eg/url?sa=i&url=https%3A%2F%2Fwww.menshealth.com%2Fhealth%2Fa40971698%2F5-questions-your-doctor-wishes-youd-ask%2F&psig=AOvVaw3uFm6f569sSVx21DkTtZZC&ust=1684768276229000&source=images&cd=vfe&ved=0CA4QjRxqFwoTCOibkIvZhv8CFQAAAAAdAAAAABAD",
+      "address":"مدينة كفر الزيات، مركز كفر الزيات، الغربية  ",
+    },
+    {
+      "name":"Nader Nasr ",
+      "image":"https://www.google.com.eg/url?sa=i&url=https%3A%2F%2Fwww.menshealth.com%2Fhealth%2Fa40971698%2F5-questions-your-doctor-wishes-youd-ask%2F&psig=AOvVaw3uFm6f569sSVx21DkTtZZC&ust=1684768276229000&source=images&cd=vfe&ved=0CA4QjRxqFwoTCOibkIvZhv8CFQAAAAAdAAAAABAD",
+      "address":"مدينة كفر الزيات، مركز كفر الزيات، الغربية  ",
+    },
+    {
+      "name":"Nader Nasr ",
+      "image":"https://www.google.com.eg/url?sa=i&url=https%3A%2F%2Fwww.menshealth.com%2Fhealth%2Fa40971698%2F5-questions-your-doctor-wishes-youd-ask%2F&psig=AOvVaw3uFm6f569sSVx21DkTtZZC&ust=1684768276229000&source=images&cd=vfe&ved=0CA4QjRxqFwoTCOibkIvZhv8CFQAAAAAdAAAAABAD",
+      "address":"مدينة كفر الزيات، مركز كفر الزيات، الغربية  ",
+    },
+    {
+      "name":"Nader Nasr ",
+      "image":"https://www.google.com.eg/url?sa=i&url=https%3A%2F%2Fwww.menshealth.com%2Fhealth%2Fa40971698%2F5-questions-your-doctor-wishes-youd-ask%2F&psig=AOvVaw3uFm6f569sSVx21DkTtZZC&ust=1684768276229000&source=images&cd=vfe&ved=0CA4QjRxqFwoTCOibkIvZhv8CFQAAAAAdAAAAABAD",
+      "address":"مدينة كفر الزيات، مركز كفر الزيات، الغربية  ",
+    },
+    {
+      "name":"Nader Nasr ",
+      "image":"https://www.google.com.eg/url?sa=i&url=https%3A%2F%2Fwww.menshealth.com%2Fhealth%2Fa40971698%2F5-questions-your-doctor-wishes-youd-ask%2F&psig=AOvVaw3uFm6f569sSVx21DkTtZZC&ust=1684768276229000&source=images&cd=vfe&ved=0CA4QjRxqFwoTCOibkIvZhv8CFQAAAAAdAAAAABAD",
+      "address":"مدينة كفر الزيات، مركز كفر الزيات، الغربية  ",
+    },
+    {
+      "name":"Nader Nasr ",
+      "image":"https://www.google.com.eg/url?sa=i&url=https%3A%2F%2Fwww.menshealth.com%2Fhealth%2Fa40971698%2F5-questions-your-doctor-wishes-youd-ask%2F&psig=AOvVaw3uFm6f569sSVx21DkTtZZC&ust=1684768276229000&source=images&cd=vfe&ved=0CA4QjRxqFwoTCOibkIvZhv8CFQAAAAAdAAAAABAD",
+      "address":"مدينة كفر الزيات، مركز كفر الزيات، الغربية  ",
+    },
+    {
+      "name":"Nader Nasr ",
+      "image":"https://www.google.com.eg/url?sa=i&url=https%3A%2F%2Fwww.menshealth.com%2Fhealth%2Fa40971698%2F5-questions-your-doctor-wishes-youd-ask%2F&psig=AOvVaw3uFm6f569sSVx21DkTtZZC&ust=1684768276229000&source=images&cd=vfe&ved=0CA4QjRxqFwoTCOibkIvZhv8CFQAAAAAdAAAAABAD",
+      "address":"مدينة كفر الزيات، مركز كفر الزيات، الغربية  ",
+    },
+    {
+      "name":"Nader Nasr ",
+      "image":"https://www.google.com.eg/url?sa=i&url=https%3A%2F%2Fwww.menshealth.com%2Fhealth%2Fa40971698%2F5-questions-your-doctor-wishes-youd-ask%2F&psig=AOvVaw3uFm6f569sSVx21DkTtZZC&ust=1684768276229000&source=images&cd=vfe&ved=0CA4QjRxqFwoTCOibkIvZhv8CFQAAAAAdAAAAABAD",
+      "address":"مدينة كفر الزيات، مركز كفر الزيات، الغربية  ",
+    },
+    {
+      "name":"Nader Nasr ",
+      "image":"https://www.google.com.eg/url?sa=i&url=https%3A%2F%2Fwww.menshealth.com%2Fhealth%2Fa40971698%2F5-questions-your-doctor-wishes-youd-ask%2F&psig=AOvVaw3uFm6f569sSVx21DkTtZZC&ust=1684768276229000&source=images&cd=vfe&ved=0CA4QjRxqFwoTCOibkIvZhv8CFQAAAAAdAAAAABAD",
+      "address":"مدينة كفر الزيات، مركز كفر الزيات، الغربية  ",
+    },
+    {
+      "name":"Nader Nasr ",
+      "image":"https://www.google.com.eg/url?sa=i&url=https%3A%2F%2Fwww.menshealth.com%2Fhealth%2Fa40971698%2F5-questions-your-doctor-wishes-youd-ask%2F&psig=AOvVaw3uFm6f569sSVx21DkTtZZC&ust=1684768276229000&source=images&cd=vfe&ved=0CA4QjRxqFwoTCOibkIvZhv8CFQAAAAAdAAAAABAD",
+      "address":"مدينة كفر الزيات، مركز كفر الزيات، الغربية  ",
+    },
+    {
+      "name":"Nader Nasr ",
+      "image":"https://www.google.com.eg/url?sa=i&url=https%3A%2F%2Fwww.menshealth.com%2Fhealth%2Fa40971698%2F5-questions-your-doctor-wishes-youd-ask%2F&psig=AOvVaw3uFm6f569sSVx21DkTtZZC&ust=1684768276229000&source=images&cd=vfe&ved=0CA4QjRxqFwoTCOibkIvZhv8CFQAAAAAdAAAAABAD",
+      "address":"مدينة كفر الزيات، مركز كفر الزيات، الغربية  ",
+    },
+    {
+      "name":"Nader Nasr ",
+      "image":"https://www.google.com.eg/url?sa=i&url=https%3A%2F%2Fwww.menshealth.com%2Fhealth%2Fa40971698%2F5-questions-your-doctor-wishes-youd-ask%2F&psig=AOvVaw3uFm6f569sSVx21DkTtZZC&ust=1684768276229000&source=images&cd=vfe&ved=0CA4QjRxqFwoTCOibkIvZhv8CFQAAAAAdAAAAABAD",
+      "address":"مدينة كفر الزيات، مركز كفر الزيات، الغربية  ",
+    },
+    {
+      "name":"Nader Nasr ",
+      "image":"https://www.google.com.eg/url?sa=i&url=https%3A%2F%2Fwww.menshealth.com%2Fhealth%2Fa40971698%2F5-questions-your-doctor-wishes-youd-ask%2F&psig=AOvVaw3uFm6f569sSVx21DkTtZZC&ust=1684768276229000&source=images&cd=vfe&ved=0CA4QjRxqFwoTCOibkIvZhv8CFQAAAAAdAAAAABAD",
+      "address":"مدينة كفر الزيات، مركز كفر الزيات، الغربية  ",
+    },
+  ];
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      backgroundColor: Theme.of(context).splashColor,
+      backgroundColor:Theme.of(context).splashColor,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Theme.of(context).splashColor,
@@ -27,15 +120,15 @@ class _DoctorsState extends State<Doctors> {
 
       ),
       body: Container(
-        decoration:   BoxDecoration(
-          color:Theme.of(context).secondaryHeaderColor,
-          borderRadius: const BorderRadius.only(
+        decoration:   const BoxDecoration(
+          color:Colors.white,
+          borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
         ),
          padding: EdgeInsets.all( 15),
         child: ListView.separated(itemBuilder:(context,index)=>Container(
           decoration: BoxDecoration(
-            color:Colors.white ,
+            color:Theme.of(context).splashColor ,
             borderRadius:BorderRadius.circular(15),
           ),
           padding: EdgeInsets.all( 10),
@@ -43,14 +136,14 @@ class _DoctorsState extends State<Doctors> {
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                    backgroundImage: NetworkImage('https://www.freepnglogos.com/uploads/doctor-png/doctor-bulk-billing-doctors-chapel-hill-health-care-medical-3.png'),
+                   CircleAvatar(
+                    backgroundImage: NetworkImage(doctor[index]['image']),
                   ),
-                  SizedBox(width: 10,),
-                  Text( 'Dr:Ahmed AbdElrahman' , style:TextStyle(fontWeight:FontWeight.bold ,fontSize: 16 ,color:Theme.of(context).secondaryHeaderColor,),)
+                  const SizedBox(width: 10,),
+                  Text(  doctor[index]['name'] , style:TextStyle(fontWeight:FontWeight.bold ,fontSize: 16 ,color:Theme.of(context).secondaryHeaderColor,),)
                 ],
               ),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               Row(
                 children: [
                   Icon(Icons.location_on ,
@@ -59,7 +152,7 @@ class _DoctorsState extends State<Doctors> {
                   SizedBox(
                     width: 5,
                   ),
-                  Text('شارع المدارس , قسم شبين الكوم')
+                    Text(doctor[index]['address'] )
                 ],
               ),
               SizedBox(height: 5,),
@@ -105,7 +198,7 @@ class _DoctorsState extends State<Doctors> {
           ),
         )
 
-            , separatorBuilder:(context , index)=>SizedBox(height: 10,), itemCount:100),
+            , separatorBuilder:(context , index)=>SizedBox(height: 10,), itemCount:doctor.length),
       ),
     );
   }

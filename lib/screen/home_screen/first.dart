@@ -6,6 +6,8 @@ import 'package:nicu/screen/drawer_screen/help_screen.dart';
 import 'package:nicu/screen/drawer_screen/invite_friend_screen.dart';
 import 'package:nicu/screen/home_screen/home.dart';
 
+import '../doctor_screen/doctors.dart';
+
 
 
 class HomePage extends StatefulWidget {
@@ -69,6 +71,11 @@ class _HomePageState extends State<HomePage> {
         case DrawerIndex.Invite:
           setState(() {
             screenView = InviteFriend();
+          });
+          break;
+        case DrawerIndex.DOCTOR:
+          setState(() {
+            screenView = const Doctors();
           });
           break;
         default:

@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -23,6 +25,7 @@ class _BookingState extends State<Booking> {
   String? image;
   String? phone;
   String? user;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,21 +34,30 @@ class _BookingState extends State<Booking> {
         backgroundColor: Color(0xffEAE3D1),
         elevation: 0,
         centerTitle: true,
-        title: Text('Booking',style: TextStyle(color:Theme.of(context).secondaryHeaderColor ,fontWeight: FontWeight.bold ,fontSize: 22.0 ),),
-        leading: IconButton(
-          onPressed: (){},
-          icon:Icon(Icons.arrow_back ,color: Theme.of(context).secondaryHeaderColor),
+        title: Text(
+          'Booking',
+          style: TextStyle(
+              color: Theme.of(context).secondaryHeaderColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 22.0),
         ),
-
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back,
+              color: Theme.of(context).secondaryHeaderColor),
+        ),
       ),
       body: Container(
         height: double.infinity,
         decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.only(topLeft:Radius.circular( 20.0) ,topRight:Radius.circular( 20.0) ),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
           image: DecorationImage(
-            image: AssetImage('asset/Images/b.png'),// background
-            opacity: 0.3 ,
+            image: AssetImage('asset/Images/b.png'), // background
+            opacity: 0.3,
           ),
         ),
         child: Padding(
@@ -62,69 +74,79 @@ class _BookingState extends State<Booking> {
                     children: [
                       CircleAvatar(
                         radius: 30,
-                        backgroundImage: NetworkImage('https://www.freepnglogos.com/uploads/doctor-png/doctor-bulk-billing-doctors-chapel-hill-health-care-medical-3.png'),
+                        backgroundImage: NetworkImage(
+                            'https://www.freepnglogos.com/uploads/doctor-png/doctor-bulk-billing-doctors-chapel-hill-health-care-medical-3.png'),
                       ),
-                      SizedBox(width: 10,),
-                      Text( 'Dr:Ahmed AbdElrahman' , style:TextStyle(fontWeight:FontWeight.bold ,fontSize: 20 ,color:Theme.of(context).secondaryHeaderColor,),)
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Dr:Ahmed AbdElrahman',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Theme.of(context).secondaryHeaderColor,
+                        ),
+                      )
                     ],
                   ),
                   const SizedBox(
                     height: 70.0,
                   ),
                   buildTextFormField(
-                      hint: 'Name' ,
+                      hint: 'Name',
                       validate: () => (val) {
-                        if (val!.isEmpty) {
-                          return "ChildrenName is empty" ;
-                        }
-                        return null;
-                      },
+                            if (val!.isEmpty) {
+                              return "ChildrenName is empty";
+                            }
+                            return null;
+                          },
                       onSave: () => (val) {
-                        setState(() {
-                          childrenName = val;
-                        });
-                      },
+                            setState(() {
+                              childrenName = val;
+                            });
+                          },
                       onTap: () {},
-                      label: 'Children Name' ,
+                      label: 'Children Name',
                       sIcon: const Icon(Icons.done)),
                   const SizedBox(
                     height: 20.0,
                   ),
                   buildTextFormField(
-                      hint: 'Phone' ,
+                      hint: 'Phone',
                       validate: () => (val) {
-                        if (val!.isEmpty) {
-                          return "Phone is empty" ;
-                        }
-                        return null;
-                      },
+                            if (val!.isEmpty) {
+                              return "Phone is empty";
+                            }
+                            return null;
+                          },
                       onSave: () => (val) {
-                        setState(() {
-                          phone = val;
-                        });
-                      },
+                            setState(() {
+                              phone = val;
+                            });
+                          },
                       onTap: () {},
-                      label: 'Phone' ,
+                      label: 'Phone',
                       sIcon: const Icon(Icons.done)),
                   const SizedBox(
                     height: 20.0,
                   ),
                   buildTextFormField(
-                      hint: 'Age' ,
+                      hint: 'Age',
                       type: TextInputType.number,
                       validate: () => (val) {
-                        if (val!.isEmpty) {
-                          return "Age is Empty " ;
-                        }
-                        return null;
-                      },
+                            if (val!.isEmpty) {
+                              return "Age is Empty ";
+                            }
+                            return null;
+                          },
                       onSave: () => (val) {
-                        setState(() {
-                          weight = val;
-                        });
-                      },
+                            setState(() {
+                              weight = val;
+                            });
+                          },
                       onTap: () => () {},
-                      label: 'Age' ,
+                      label: 'Age',
                       sIcon: const Icon(Icons.done)),
                   const SizedBox(
                     height: 20.0,
@@ -141,7 +163,7 @@ class _BookingState extends State<Booking> {
                             color: Colors.black,
                           ),
                           decoration: InputDecoration(
-                            labelText: "Select Date" ,
+                            labelText: "Select Date",
                             labelStyle: GoogleFonts.arimo(
                               fontSize: 20,
                               color: Colors.grey[700],
@@ -153,13 +175,16 @@ class _BookingState extends State<Booking> {
                             ),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
-                                borderSide:   BorderSide( color:Colors.indigo.shade300, width: 1.2)),
+                                borderSide: BorderSide(
+                                    color: Colors.indigo.shade300, width: 1.2)),
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
-                                borderSide:   BorderSide( color:Colors.indigo.shade300, width: 1.2)),
+                                borderSide: BorderSide(
+                                    color: Colors.indigo.shade300, width: 1.2)),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
-                              borderSide:   BorderSide( color:Colors.indigo.shade300, width: 1.2),
+                              borderSide: BorderSide(
+                                  color: Colors.indigo.shade300, width: 1.2),
                             ),
                             filled: false,
                             fillColor: Colors.white,
@@ -195,7 +220,7 @@ class _BookingState extends State<Booking> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Radio(
-                          activeColor:Theme.of(context).secondaryHeaderColor,
+                          activeColor: Theme.of(context).secondaryHeaderColor,
                           value: 1,
                           groupValue: _value,
                           onChanged: (value) {
@@ -204,7 +229,7 @@ class _BookingState extends State<Booking> {
                             });
                           }),
                       Text(
-                        "Male" ,
+                        "Male",
                         style: GoogleFonts.arimo(
                           fontSize: 23,
                           fontWeight: FontWeight.bold,
@@ -224,7 +249,7 @@ class _BookingState extends State<Booking> {
                             });
                           }),
                       Text(
-                        "Female" ,
+                        "Female",
                         style: GoogleFonts.arimo(
                           fontSize: 23,
                           fontWeight: FontWeight.bold,
@@ -251,6 +276,7 @@ class _BookingState extends State<Booking> {
       ),
     );
   }
+
   TextFormField buildTextFormField({
     required String hint,
     required String label,
@@ -279,13 +305,13 @@ class _BookingState extends State<Booking> {
         ),
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide:   BorderSide( color:Colors.indigo.shade300, width: 1.2)),
+            borderSide: BorderSide(color: Colors.indigo.shade300, width: 1.2)),
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide:   BorderSide( color:Colors.indigo.shade300, width: 1.2)),
+            borderSide: BorderSide(color: Colors.indigo.shade300, width: 1.2)),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide:   BorderSide( color:Colors.indigo.shade300, width: 1.2),
+          borderSide: BorderSide(color: Colors.indigo.shade300, width: 1.2),
         ),
         filled: false,
         fillColor: Colors.white,
@@ -296,10 +322,37 @@ class _BookingState extends State<Booking> {
       ),
     );
   }
+
   void _submit() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+      getData();
       Navigator.of(context).pop();
     } else {}
+  }
+
+  getData() async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((value) {
+      addData(value['name'], value['email'], value['image']);
+    });
+  }
+
+  addData(String name, email, image) async {
+    CollectionReference request =
+        FirebaseFirestore.instance.collection('doctors');
+    request.add({
+      "Name": childrenName,
+      "Weight": weight,
+      "Birthday": _birthday!.text,
+      "Gender": _value == 1 ? "Male" : "Female",
+      'Email': email,
+      'phone': phone,
+      'name': name,
+      'image': image
+    });
   }
 }
