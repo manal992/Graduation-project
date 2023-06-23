@@ -349,10 +349,10 @@ class SignUpState extends State<SignUp> {
       'Phone': _phoneController,
       'id': user?.uid,
       'image': 'null',
-      'createdAt': time,
-      'isOnline': false,
-      'lastActive': time,
-      'pushToken': ''
+      'created_at': time,
+      'is_online': false,
+      'last_active': time,
+      'push_token': ''
     });
   }
 }

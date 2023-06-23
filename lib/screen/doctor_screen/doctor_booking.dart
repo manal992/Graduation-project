@@ -8,8 +8,8 @@ import 'package:intl/intl.dart';
 import 'package:nicu/button.dart';
 
 class Booking extends StatefulWidget {
-  const Booking({Key? key}) : super(key: key);
-
+  const Booking({Key? key, required this.title}) : super(key: key);
+final String title;
   @override
   State<Booking> createState() => _BookingState();
 }
@@ -17,7 +17,7 @@ class Booking extends StatefulWidget {
 class _BookingState extends State<Booking> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   String? childrenName;
-  final TextEditingController? _birthday = TextEditingController();
+  final TextEditingController _birthday = TextEditingController();
   String? weight;
   int _value = 1;
   String? name;
@@ -29,9 +29,9 @@ class _BookingState extends State<Booking> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffEAE3D1),
+      backgroundColor: const Color(0xffEAE3D1),
       appBar: AppBar(
-        backgroundColor: Color(0xffEAE3D1),
+        backgroundColor: const Color(0xffEAE3D1),
         elevation: 0,
         centerTitle: true,
         title: Text(
@@ -72,16 +72,16 @@ class _BookingState extends State<Booking> {
                   ),
                   Row(
                     children: [
-                      CircleAvatar(
+                      const CircleAvatar(
                         radius: 30,
                         backgroundImage: NetworkImage(
                             'https://www.freepnglogos.com/uploads/doctor-png/doctor-bulk-billing-doctors-chapel-hill-health-care-medical-3.png'),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Text(
-                        'Dr:Ahmed AbdElrahman',
+                        widget.title,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,

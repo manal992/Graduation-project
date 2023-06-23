@@ -20,7 +20,7 @@ class apply extends StatefulWidget {
 class _applyState extends State<apply> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   String? childrenName;
-  final TextEditingController? _birthday = TextEditingController();
+  final TextEditingController _birthday = TextEditingController();
   String? weight;
   int _value = 1;
   String? name;
@@ -30,6 +30,7 @@ class _applyState extends State<apply> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.id);
     return Scaffold(
       backgroundColor: const Color(0xffEAE3D1),
       appBar: AppBar(
@@ -361,12 +362,31 @@ class _applyState extends State<apply> {
     request.add({
       "Name": childrenName,
       "Weight": weight,
-      "Birthday": _birthday!.text,
+      "Birthday": _birthday.text,
       "Gender": _value == 1 ? "Male" : "Female",
       'Email': email,
       'phone': phone,
       'name': name,
-      'image': image
+      'image': image,
+      'isAccept':0
+    }).then((value) {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('requests')
+          .add({
+        'id': value.id,
+        "Name": childrenName,
+        "Weight": weight,
+        "Birthday": _birthday.text,
+        "Gender": _value == 1 ? "Male" : "Female",
+        'Email': email,
+        'phone': phone,
+        'name': name,
+        'image': image,
+        'hospital': id,
+        'isAccept':0
+      });
     });
   }
 }

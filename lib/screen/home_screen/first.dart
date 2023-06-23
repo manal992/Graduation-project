@@ -7,8 +7,7 @@ import 'package:nicu/screen/drawer_screen/invite_friend_screen.dart';
 import 'package:nicu/screen/home_screen/home.dart';
 
 import '../doctor_screen/doctors.dart';
-
-
+import '../request/requests.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,7 +17,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   Widget? screenView;
 
   DrawerIndex? drawerIndex;
@@ -26,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     drawerIndex = DrawerIndex.HOME;
-    screenView =  const HomeScreen();
+    screenView = const HomeScreen();
     super.initState();
   }
 
@@ -44,8 +42,6 @@ class _HomePageState extends State<HomePage> {
         screenView: screenView,
         //we replace screen view as we need on navigate starting screens like MyHomePage, HelpScreen, FeedbackScreen, etc...
       ),
-
-
     );
   }
 
@@ -55,7 +51,7 @@ class _HomePageState extends State<HomePage> {
       switch (drawerIndex) {
         case DrawerIndex.HOME:
           setState(() {
-            screenView =  const HomeScreen();
+            screenView = const HomeScreen();
           });
           break;
         case DrawerIndex.Help:
@@ -76,6 +72,11 @@ class _HomePageState extends State<HomePage> {
         case DrawerIndex.DOCTOR:
           setState(() {
             screenView = const Doctors();
+          });
+          break;
+        case DrawerIndex.Request:
+          setState(() {
+            screenView = const Requests();
           });
           break;
         default:

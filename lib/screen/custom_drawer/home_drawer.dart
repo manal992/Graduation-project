@@ -36,6 +36,11 @@ class _HomeDrawerState extends State<HomeDrawer> {
         icon: const Icon(Icons.home),
       ),
       DrawerList(
+        index: DrawerIndex.Request,
+        labelName: 'Request',
+        icon: const Icon(Icons.request_page),
+      ),
+      DrawerList(
         index: DrawerIndex.DOCTOR,
         labelName: 'Doctor',
         icon: const Icon(Icons.person),
@@ -312,6 +317,7 @@ enum DrawerIndex {
   Invite,
   Testing,
   DOCTOR,
+  Request,
 }
 
 class DrawerList {
