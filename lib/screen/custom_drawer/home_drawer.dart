@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nicu/const/drawer_theme.dart';
@@ -73,6 +74,16 @@ class _HomeDrawerState extends State<HomeDrawer> {
     ];
   }
 
+  Future getProfileData() async {
+    var firestore = FirebaseFirestore.instance;
+    CollectionReference qn = firestore.collection("users");
+    DocumentReference itemIdRef =
+        qn.doc(FirebaseAuth.instance.currentUser!.uid);
+    DocumentSnapshot itemIdSnapshot = await itemIdRef.get();
+    print(itemIdSnapshot['name']);
+    return itemIdSnapshot;
+  }
+
   @override
   Widget build(BuildContext context) {
     var brightness = MediaQuery.of(context).platformBrightness;
@@ -92,53 +103,80 @@ class _HomeDrawerState extends State<HomeDrawer> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  AnimatedBuilder(
-                    animation: widget.iconAnimationController!,
-                    builder: (BuildContext context, Widget? child) {
-                      return ScaleTransition(
-                        scale: AlwaysStoppedAnimation<double>(1.0 -
-                            (widget.iconAnimationController!.value) * 0.2),
-                        child: RotationTransition(
-                          turns: AlwaysStoppedAnimation<double>(Tween<double>(
-                                      begin: 0.0, end: 24.0)
-                                  .animate(CurvedAnimation(
-                                      parent: widget.iconAnimationController!,
-                                      curve: Curves.fastOutSlowIn))
-                                  .value /
-                              360),
-                          child: Container(
-                            height: 120,
-                            width: 120,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              boxShadow: <BoxShadow>[
-                                BoxShadow(
-                                    color: AppTheme.grey.withOpacity(0.6),
-                                    offset: const Offset(2.0, 4.0),
-                                    blurRadius: 8),
-                              ],
-                            ),
-                            child: ClipRRect(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(60.0)),
-                              child: Image.asset('asset/Images/user.png'),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8, left: 4),
-                    child: Text(
-                      'Chris Hems worth',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: isLightMode ? AppTheme.grey : AppTheme.white,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
+                  FutureBuilder(
+                      future: getProfileData(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          var data = snapshot.data;
+                          return AnimatedBuilder(
+                            animation: widget.iconAnimationController!,
+                            builder: (BuildContext context, Widget? child) {
+                              return ScaleTransition(
+                                scale: AlwaysStoppedAnimation<double>(1.0 -
+                                    (widget.iconAnimationController!.value) *
+                                        0.2),
+                                child: RotationTransition(
+                                  turns: AlwaysStoppedAnimation<double>(
+                                      Tween<double>(begin: 0.0, end: 24.0)
+                                              .animate(CurvedAnimation(
+                                                  parent: widget
+                                                      .iconAnimationController!,
+                                                  curve: Curves.fastOutSlowIn))
+                                              .value /
+                                          360),
+                                  child: Container(
+                                    height: 120,
+                                    width: 120,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      boxShadow: <BoxShadow>[
+                                        BoxShadow(
+                                            color:
+                                                AppTheme.grey.withOpacity(0.6),
+                                            offset: const Offset(2.0, 4.0),
+                                            blurRadius: 8),
+                                      ],
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        data['image'] != 'null'
+                                            ? ClipRRect(
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(60.0)),
+                                                child: Image.network(
+                                                    data['image']),
+                                              )
+                                            : const CircleAvatar(
+                                                child: Icon(Icons.person),
+                                              ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 8, left: 4),
+                                          child: Text(
+                                            data['name'],
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              color: isLightMode
+                                                  ? AppTheme.grey
+                                                  : AppTheme.white,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        } else {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      }),
                 ],
               ),
             ),
